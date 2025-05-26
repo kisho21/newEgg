@@ -1,0 +1,39 @@
+# Visual Studio temporary files
+.vs/
+*.suo
+*.user
+*.log
+*.pdb
+*.obj
+*.ilk
+*.ipch
+*.aps
+*.bsc
+*.sbr
+
+# Compiled binaries and object files
+[Dd]ebug/
+[Rr]elease/
+x64/
+build/
+bin/
+obj/
+
+# Package files
+*.nupkg
+*.snk
+
+# Visual Studio Code cache (if using VS Code)
+.vscode/
+
+# Resharper or other IDE caches
+.idea/
+.vs-res/
+
+# Backup files
+*.bak
+*~
+
+# Any other specific large files you want to ignore
+# 例: 特定の巨大なログファイルやデータファイル
+# my_large_data.dat
