@@ -14,9 +14,6 @@ Minigame1::Minigame1(void) {
     gameImage = -1;
     squareImage = -1;
 
-    //std::random_device seed_gen_local;
-    //std::mt19937 engine_local(seed_gen_local());    //いらないかも
-
     InitializeGame();       //ゲームの初期化
     SetupTileColors();      //タイルの色設定
 }
