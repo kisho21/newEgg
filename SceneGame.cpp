@@ -76,8 +76,8 @@ void SceneGame::Update(void) {
 			int iconx = uiInit->GetIconX();
 			int icony = uiInit->GetIconY();
 			if (mouseX > iconx && mouseX<iconx + 64 && mouseY>icony && mouseY < icony + 64 && prevMouseLeft == 1 && nowMouseLeft == 0) {
-				//nowGameState = STATE_SELECTGAME;
-				nextScene_ID = E_SCENE_MINIGAME_1;
+				nowGameState = STATE_SELECTGAME;
+				//nextScene_ID = E_SCENE_MINIGAME_1;
 			}
 		}
 		break;
@@ -85,17 +85,35 @@ void SceneGame::Update(void) {
 		uiInit->Update();
 
 		//メニューのスライド
-		int nexty = uiInit->GetMenuY() - 15;						//ここの実数値でスライドの速さ変更可能
-		for (int y = uiInit->GetMenuY(); y >= nexty; y -= 5) {
-			if (y <= 40) {
-				y = 40;
-				break;
-			}
+		bool down = uiInit->GetCheckDown();
+		if (!down) {
+			int nexty = uiInit->GetMenuY() - 15;						//ここの実数値でスライドの速さ変更可能
+			for (int y = uiInit->GetMenuY(); y >= nexty; y -= 5) {
+				if (y <= 40) {
+					y = 40;
+					break;
+				}
 
-			uiInit->SetMenuY(y);
-			uiInit->SetIconY(y + 16);
+				uiInit->SetMenuY(y);
+				uiInit->SetIconY(y + 16);
+			}
+			break;
 		}
-		break;
+		if (down) {
+			int nexty= uiInit->GetMenuY() + 15;
+			for (int y = uiInit->GetMenuY(); y <= nexty; y += 5) {
+				if (y >= 420) {
+					y = 415;
+					nowGameState = STATE_PLAY;
+					uiInit->SetCheckDownF();
+					break;
+				}
+
+				uiInit->SetMenuY(y);
+				uiInit->SetIconY(y + 16);
+			}
+			break;
+		}
 	}
 
 	//デバッグ用

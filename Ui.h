@@ -27,6 +27,9 @@ public:
 	void SetIconY(int y) { iconY = y; }
 	void SetMenuY(int y) { menuY = y; }
 
+	bool GetCheckDown(void) { return checkDown; }
+	void SetCheckDownF(void) { checkDown = false; }
+
 	//bool SetMiniGame(void) { checkMinigame = true; }
 
 private:
@@ -45,8 +48,9 @@ private:
 	int frame;							//アニメーションの表示フレーム
 	int frameAdjust;					//アニメーション表示の調整フレーム
 
-	bool onMinigame, onShop, onBag, onSet;
-	bool checkMinigame, checkShop, checkBag, checkSet;
+	bool onMinigame, onShop, onBag, onSet, onDown;
+	bool checkDown;
+	//bool checkMinigame, checkShop, checkBag, checkSet, checkDown;
 
 	int mouseX, mouseY;						//マウス座標
 	int prevMouseLeft, nowMouseLeft;		//マウスの入力状態を格納する変数

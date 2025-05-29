@@ -73,7 +73,8 @@ void Ui::GameInit(void) {
 	frame = 0;
 	frameAdjust = 0;
 
-	onMinigame = onShop = onBag = onSet = false;
+	onMinigame = onShop = onBag = onSet = onDown =false;
+	checkDown = false;
 
 	prevMouseLeft = nowMouseLeft = 0;
 }
@@ -96,6 +97,11 @@ void Ui::Update(void) {
 	else onBag = false;
 	if (mouseX >= iconX + ICON_SIZE * 3 + 24 && mouseX <= iconX + ICON_SIZE * 4 + 24 && mouseY >= iconY && mouseY <= iconY + ICON_SIZE) onSet = true;
 	else onSet = false;
+	if (mouseX >= Application::WINDOW_SIZE_WID / 2 - 32 && mouseX <= Application::WINDOW_SIZE_WID / 2 + 32 && mouseY >= menuY + 400 && mouseY <= menuY + 432) onDown = true;
+	else onDown = false;
+
+	//checkDown = (onDown && prevMouseLeft == 0 && nowMouseLeft == 1) ? true : false;
+	if (onDown && prevMouseLeft == 0 && nowMouseLeft == 1) checkDown = true;
 }
 
 void Ui::Draw(void) {
@@ -118,7 +124,12 @@ void Ui::Draw(void) {
 	else DrawGraph(iconX + ICON_SIZE * 2 + 16, iconY, pushedBagImage, true);
 	if (onSet == false) DrawGraph(iconX + ICON_SIZE * 3 + 24, iconY, setImage, true);
 	else DrawGraph(iconX + ICON_SIZE * 3 + 24, iconY, pushedSetImage, true);
-	//ここから、メニュー下降ボタンの設置
+	//メニュー下降ボタンの設置
+	if (onDown == false) DrawGraph(Application::WINDOW_SIZE_WID / 2 - 32, menuY + 400, downImage, true);
+	else DrawGraph(Application::WINDOW_SIZE_WID / 2 - 32, menuY + 400, pushedDownImage, true);
+
+	//デバッグ
+	//if (checkDown)DrawBox(0, 0, 100, 100, 0xffffff, true);
 }
 
 bool Ui::Release(void) {
