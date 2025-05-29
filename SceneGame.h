@@ -18,6 +18,9 @@ public:
 
 	eScene_ID GetNextSceneID(void) { return nextScene_ID; }
 
+	//int GetMoney(void) { return money; }
+	//void SetMoney(int m) { money = m; }
+
 private:
 	//ゲームの状態を表す列挙型
 	enum GameState {
@@ -43,14 +46,6 @@ private:
 	int prevSpaceKey, nowSpaceKey;			//キーの状態を格納する変数
 
 	eScene_ID nextScene_ID;					//次に遷移するシーンID
-
-	/*
-	//操作ガイド関係
-	int guideImg;						//操作ガイドの画像ハンドル
-	int guidePosX;
-	int guidePosY;
-	bool guideFlg;
-	*/
 
 	//デバッグ用
 	int prev1Key, now1Key;

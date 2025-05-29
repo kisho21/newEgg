@@ -41,13 +41,12 @@ private:
 	};
 	GameState nowGameState = PLAYING;
 
-	int gameImage;						//ミニゲーム背景画像
-	int squareImage;					//マス目画像
-	int numberTile[MAX_NUMBERTILE];		//数字タイル画像
+	std::map<int, int> tileColors;		//タイルの色を定義するマップ（数値に応じて色を変える）
 
-	int tilePosX, tilePosY;				//数字タイルの座標
-	int tileNo;
-	//int score;
+	int board[BOARD_SIZE][BOARD_SIZE];	//ゲームボード
+	long long score = 0;				//スコア
+
+	int gameImage;						//ミニゲーム背景画像
 
 	int mouseX, mouseY;					//マウス座標
 	int prevMouseLeft, nowMouseLeft;	//マウスの入力状態を格納する変数
@@ -67,15 +66,6 @@ private:
 	void UpdateGame();
 	bool CheckGameOver();
 	void SetupTileColors(); // タイルの色設定
-
-	// タイルの色を定義するマップ（数値に応じて色を変える）
-	std::map<int, int> tileColors;
-
-	
-
-	// ゲームボード
-	int board[BOARD_SIZE][BOARD_SIZE];
-	long long score = 0; // スコア
 
 	// 乱数生成器
 	//std::random_device seed_gen;

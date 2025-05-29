@@ -52,10 +52,6 @@ void SceneGame::GameInit(void) {
 	charaInst->GameInit();
 	uiInit->GameInit();
 
-	//guidePosX = 100;
-	//guidePosY = 100;
-	//guideFlg = true;
-
 	prevMouseLeft = nowMouseLeft = 0;
 	prevSpaceKey = nowSpaceKey = 0;
 }
@@ -102,20 +98,6 @@ void SceneGame::Update(void) {
 		break;
 	}
 
-
-	//ゲームの状態遷移
-	/*
-	if (nowGameState == STATE_PLAY && guideFlg == true) {
-		nowGameState = STATE_GUIDE;
-		guideFlg = false;
-	}
-	else if (nowGameState == STATE_GUIDE) {
-		if (CheckHitKey(KEY_INPUT_RETURN) == 1) {
-			nowGameState = STATE_PLAY;
-		}
-	}
-	*/
-
 	//デバッグ用
 	prev1Key = now1Key;
 	now1Key = CheckHitKey(KEY_INPUT_1);
@@ -135,17 +117,8 @@ void SceneGame::Draw(void) {
 
 	//DrawBox(0, 0, 100, 100, 0x000000, true);
 	DrawCircle(mouseX, mouseY, 5, GetColor(0, 0, 255));		//マウス座標の場所に円の描画
+	//DrawFormatString(0, 0, 0x000000, "%d", money);
 }
-
-/*
-void SceneGame::DrawGuide(void) {
-
-	if (nowGameState == STATE_GUIDE) {
-		DrawGraph(guidePosX, guidePosY, guideImg, true);
-		DrawString(100, 500, "エンターキーで操作ガイドを閉じる", 0x000000);
-	}
-}
-*/
 
 bool SceneGame::Release(void) {
 	

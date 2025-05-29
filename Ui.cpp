@@ -24,6 +24,9 @@ Ui::~Ui(void) {
 
 bool Ui::SystemInit(void) {
 
+	int bubble = LoadDivGraph("image/bubble.png", MAX_BUBBLE, ANIM_NUM_BUBBLE, 1, BUBBLE_SIZE, BUBBLE_SIZE, bubbleImage);
+	if (bubble == -1) return false;
+
 	upsideImage = LoadGraph("image/UpsideWindow.png");
 	if (upsideImage == -1) return false;
 	coinImage = LoadGraph("image/coin2.png");
@@ -67,6 +70,9 @@ void Ui::GameInit(void) {
 	iconX = 4;
 	iconY = menuY + 16;
 
+	frame = 0;
+	frameAdjust = 0;
+
 	onMinigame = onShop = onBag = onSet = false;
 
 	prevMouseLeft = nowMouseLeft = 0;
@@ -78,6 +84,8 @@ void Ui::Update(void) {
 	nowMouseLeft = (GetMouseInput() & MOUSE_INPUT_LEFT);
 
 	GetMousePoint(&mouseX, &mouseY);		//マウスの座標を取得
+
+	BubbleAnim();
 	
 	//メニューの各種アイコンの処理
 	if (mouseX >= iconX && mouseX <= iconX + ICON_SIZE && mouseY >= iconY && mouseY <= iconY + ICON_SIZE) onMinigame = true;
@@ -98,8 +106,10 @@ void Ui::Draw(void) {
 
 	DrawGraph(6, 48, growthImage, true);				//成長ゲージ仮置き、ゲージを可変にする
 
-	DrawGraph(menuX, menuY, menuImage, true);
+	DrawGraph(130, 100, bubbleImage[frame], true);
 
+	//メニューの描画
+	DrawGraph(menuX, menuY, menuImage, true);
 	if (onMinigame == false) DrawGraph(iconX, iconY, minigameImage, true);
 	else DrawGraph(iconX, iconY, pushedMinigameImage, true);
 	if (onShop == false) DrawGraph(iconX + ICON_SIZE + 8, iconY, shopImage, true);
@@ -128,4 +138,16 @@ bool Ui::Release(void) {
 	if (DeleteGraph(pushedDownImage) == -1) return false;
 
 	return true;
+}
+
+void Ui:: BubbleAnim(void) {
+
+	if (frameAdjust == 60) {
+		frame++;
+		frameAdjust = 0;
+	}
+	if (frame == MAX_BUBBLE) {
+		frame = 0;
+	}
+	frameAdjust++;
 }

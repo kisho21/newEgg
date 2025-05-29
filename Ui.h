@@ -7,6 +7,11 @@ public:
 	static constexpr int MENU_HIG = 97;
 	static constexpr int ICON_SIZE = 64;
 
+	//吹き出しのアニメーション
+	static constexpr int BUBBLE_SIZE = 144;
+	static constexpr int ANIM_NUM_BUBBLE = 2;
+	static constexpr int MAX_BUBBLE = ANIM_NUM_BUBBLE;
+
 	Ui(void);
 	~Ui(void);
 
@@ -25,7 +30,7 @@ public:
 	//bool SetMiniGame(void) { checkMinigame = true; }
 
 private:
-	//画面上部のウィンドウの追加←ここから
+	int bubbleImage[MAX_BUBBLE];
 	int upsideImage;																//画面上部の枠
 	int coinImage;																	//お金アイコン画像
 	int growthImage;																//成長ゲージ画像、仮置き段階
@@ -37,9 +42,14 @@ private:
 	int menuX, menuY;						//メニューの座標
 	int iconX, iconY;						//アイコンの座標
 
+	int frame;							//アニメーションの表示フレーム
+	int frameAdjust;					//アニメーション表示の調整フレーム
+
 	bool onMinigame, onShop, onBag, onSet;
 	bool checkMinigame, checkShop, checkBag, checkSet;
 
 	int mouseX, mouseY;						//マウス座標
 	int prevMouseLeft, nowMouseLeft;		//マウスの入力状態を格納する変数
+
+	void BubbleAnim(void);
 };

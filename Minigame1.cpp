@@ -7,12 +7,7 @@
 #include "Application.h"
 #include "Minigame1.h"
 
-
 Minigame1::Minigame1(void) {
-
-    //仮置き画像、後々清書して1ファイルにまとめる
-    gameImage = -1;
-    squareImage = -1;
 
     InitializeGame();       //ゲームの初期化
     SetupTileColors();      //タイルの色設定
@@ -24,13 +19,11 @@ Minigame1::~Minigame1(void) {
 
 bool Minigame1::SystemInit(void) {
 
-    gameImage = LoadGraph("image/minigameFrame.png");
+    gameImage = LoadGraph("image/minigame-2048.png");
     if (gameImage == -1) return false;
-    //squareImage = LoadGraph("image/44square.png");
-    //if (squareImage == -1) return false;
 
-    int nt = LoadDivGraph("image/numberTile.png", MAX_NUMBERTILE, MAX_NUMBERTILE, 1, 64, 64, numberTile);
-    if (nt == -1) return false;
+    //int nt = LoadDivGraph("image/numberTile.png", MAX_NUMBERTILE, MAX_NUMBERTILE, 1, 64, 64, numberTile);
+    //if (nt == -1) return false;
 
     mouseX = mouseY = 0;
 
@@ -41,10 +34,6 @@ void Minigame1::GameInit(void) {
 
     //次のシーンの初期設定
     nextScene_ID = E_SCENE_MINIGAME_1;
-
-    tilePosX = 13;
-    tilePosY = 145;
-    tileNo = 0;
     score = 0;
 
     prevMouseLeft = nowMouseLeft = 0;
@@ -64,42 +53,24 @@ void Minigame1::Update(void) {
     UpdateGame();
 
     //デバッグ
-    /*
-    prev0Key = now0Key;
-    now0Key = CheckHitKey(KEY_INPUT_0);
-    if (prev0Key == 0 && now0Key == 1) tileNo++;
-    prevUpKey = nowUpKey;
-    nowUpKey = CheckHitKey(KEY_INPUT_UP);
-    prevDownKey = nowDownKey;
-    nowDownKey = CheckHitKey(KEY_INPUT_DOWN);
-    prevRightKey = nowRightKey;
-    nowRightKey = CheckHitKey(KEY_INPUT_RIGHT);
-    prevLeftKey = nowLeftKey;
-    nowLeftKey = CheckHitKey(KEY_INPUT_LEFT);
-    if (prevUpKey == 0 && nowUpKey == 1) tilePosY -= SLIDE_RANGE;
-    if (prevDownKey == 0 && nowDownKey == 1) tilePosY += SLIDE_RANGE;
-    if (prevRightKey == 0 && nowRightKey == 1) tilePosX += SLIDE_RANGE;
-    if (prevLeftKey == 0 && nowLeftKey == 1) tilePosX -= SLIDE_RANGE;
-    */
+    
 }
 
 void Minigame1::Draw(void) {
 
     DrawGraph(0, 0, gameImage, true);
-    DrawGraph(0, 0, squareImage, true);
-    DrawGraph(tilePosX, tilePosY, numberTile[tileNo], true);
 
     DrawGame();
 
     //デバッグ
     DrawCircle(mouseX, mouseY, 5, GetColor(0, 0, 255));		//マウス座標の場所に円の描画
-    DrawFormatString(0, 0, 0x000000, "%d", tileNo);
+    //DrawFormatString(0, 0, 0x000000, "%d", tileNo);
 }
 
 bool Minigame1::Release(void) {
 
     if (DeleteGraph(gameImage) == -1) return false;
-    if (DeleteGraph(squareImage) == -1) return false;
+    //if (DeleteGraph(squareImage) == -1) return false;
 
     return true;
 }
@@ -272,8 +243,9 @@ void Minigame1::DrawGame() {
     }
 
     //スコアの描画
-    DrawString(GRID_START_X, GRID_START_Y + BOARD_SIZE * (TILE_SIZE + TILE_GAP) + TILE_GAP, "Score:", 0xffffff);
-    DrawFormatString(GRID_START_X + 80, GRID_START_Y + BOARD_SIZE * (TILE_SIZE + TILE_GAP) + TILE_GAP, 0xffffff, "%lld", score);
+    //DrawString(GRID_START_X, GRID_START_Y + BOARD_SIZE * (TILE_SIZE + TILE_GAP) + TILE_GAP, "Score:", 0xffffff);
+    //DrawFormatString(GRID_START_X + 80, GRID_START_Y + BOARD_SIZE * (TILE_SIZE + TILE_GAP) + TILE_GAP, 0x000000, "%lld", score);
+    DrawFormatString(30, 440, 0x000000, "score:%lld", score);
 
     //ゲームオーバー/クリアメッセージ
     if (nowGameState == GAME_OVER) {
@@ -378,6 +350,7 @@ void Minigame1::UpdateGame() {
 }
 
 //ゲームオーバー判定
+//ここにスコア→お金を追加
 bool Minigame1::CheckGameOver() {
 
     //空きマスがあるか
