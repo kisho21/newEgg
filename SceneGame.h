@@ -47,6 +47,9 @@ private:
 
 	eScene_ID nextScene_ID;					//次に遷移するシーンID
 
+	void MenuSlide(void);
+	void SelectGame(void);
+
 	//デバッグ用
 	int prev1Key, now1Key;
 };

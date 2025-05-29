@@ -40,6 +40,7 @@ private:
 	int menuImage;																	//メニュー画像
 	int minigameImage, shopImage, bagImage, setImage;								//メニューアイコン画像
 	int pushedMinigameImage, pushedShopImage, pushedBagImage, pushedSetImage;		//押されたアイコン画像
+	int mini1Image;																	//ミニゲームアイコン画像
 	int downImage, pushedDownImage;													//メニュー降下ボタン画像
 
 	int menuX, menuY;						//メニューの座標

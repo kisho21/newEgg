@@ -77,43 +77,14 @@ void SceneGame::Update(void) {
 			int icony = uiInit->GetIconY();
 			if (mouseX > iconx && mouseX<iconx + 64 && mouseY>icony && mouseY < icony + 64 && prevMouseLeft == 1 && nowMouseLeft == 0) {
 				nowGameState = STATE_SELECTGAME;
-				//nextScene_ID = E_SCENE_MINIGAME_1;
 			}
 		}
 		break;
 	case STATE_SELECTGAME:
 		uiInit->Update();
 
-		//メニューのスライド
-		bool down = uiInit->GetCheckDown();
-		if (!down) {
-			int nexty = uiInit->GetMenuY() - 15;						//ここの実数値でスライドの速さ変更可能
-			for (int y = uiInit->GetMenuY(); y >= nexty; y -= 5) {
-				if (y <= 40) {
-					y = 40;
-					break;
-				}
-
-				uiInit->SetMenuY(y);
-				uiInit->SetIconY(y + 16);
-			}
-			break;
-		}
-		if (down) {
-			int nexty= uiInit->GetMenuY() + 15;
-			for (int y = uiInit->GetMenuY(); y <= nexty; y += 5) {
-				if (y >= 420) {
-					y = 415;
-					nowGameState = STATE_PLAY;
-					uiInit->SetCheckDownF();
-					break;
-				}
-
-				uiInit->SetMenuY(y);
-				uiInit->SetIconY(y + 16);
-			}
-			break;
-		}
+		MenuSlide();		//メニューのスライド処理
+		SelectGame();		//ミニゲームの選択
 	}
 
 	//デバッグ用
@@ -151,4 +122,48 @@ bool SceneGame::Release(void) {
 	charaInst = nullptr;
 
 	return true;
+}
+
+//メニューのスライド処理
+void SceneGame::MenuSlide(void) {
+
+	bool down = uiInit->GetCheckDown();
+	if (!down) {
+		int nexty = uiInit->GetMenuY() - 15;						//ここの実数値でスライドの速さ変更可能
+		for (int y = uiInit->GetMenuY(); y >= nexty; y -= 5) {
+			if (y <= 40) {
+				y = 40;
+				break;
+			}
+
+			uiInit->SetMenuY(y);
+			uiInit->SetIconY(y + 16);
+		}
+		//break;
+	}
+	if (down) {
+		int nexty = uiInit->GetMenuY() + 15;
+		for (int y = uiInit->GetMenuY(); y <= nexty; y += 5) {
+			if (y >= 420) {
+				y = 415;
+				nowGameState = STATE_PLAY;
+				uiInit->SetCheckDownF();
+				break;
+			}
+
+			uiInit->SetMenuY(y);
+			uiInit->SetIconY(y + 16);
+		}
+		//break;
+	}
+}
+
+//
+void SceneGame::SelectGame(void) {
+
+	int mGameY = uiInit->GetMenuY() + 120;
+	//2048を選択
+	if (mouseX > 9 && mouseX<93 && mouseY>mGameY && mouseY < mGameY + 84 && prevMouseLeft == 1 && nowMouseLeft == 0) {
+		nextScene_ID = E_SCENE_MINIGAME_1;
+	}
 }

@@ -15,6 +15,7 @@ Ui::Ui(void) {
 	menuImage = -1;
 	minigameImage = shopImage = bagImage = setImage = -1;
 	pushedMinigameImage = pushedShopImage = pushedBagImage = pushedSetImage = -1;
+	mini1Image = -1;
 	downImage = pushedDownImage = -1;
 }
 
@@ -53,6 +54,10 @@ bool Ui::SystemInit(void) {
 	if (pushedBagImage == -1) return false;
 	pushedSetImage = LoadGraph("image/pushed-setting.png");
 	if (pushedSetImage == -1) return false;
+
+	mini1Image = LoadGraph("image/icon-2048.png");
+	if (mini1Image == -1) return false;
+
 	downImage = LoadGraph("image/button-down.png");
 	if (downImage == -1) return false;
 	pushedDownImage = LoadGraph("image/pushed-down.png");
@@ -124,6 +129,8 @@ void Ui::Draw(void) {
 	else DrawGraph(iconX + ICON_SIZE * 2 + 16, iconY, pushedBagImage, true);
 	if (onSet == false) DrawGraph(iconX + ICON_SIZE * 3 + 24, iconY, setImage, true);
 	else DrawGraph(iconX + ICON_SIZE * 3 + 24, iconY, pushedSetImage, true);
+	//ミニゲームアイコンの描画
+	DrawGraph(9, menuY + 120, mini1Image, true);
 	//メニュー下降ボタンの設置
 	if (onDown == false) DrawGraph(Application::WINDOW_SIZE_WID / 2 - 32, menuY + 400, downImage, true);
 	else DrawGraph(Application::WINDOW_SIZE_WID / 2 - 32, menuY + 400, pushedDownImage, true);
@@ -145,6 +152,7 @@ bool Ui::Release(void) {
 	if (DeleteGraph(pushedShopImage) == -1) return false;
 	if (DeleteGraph(pushedBagImage) == -1) return false;
 	if (DeleteGraph(pushedSetImage) == -1) return false;
+	if (DeleteGraph(mini1Image) == -1) return false;
 	if (DeleteGraph(downImage) == -1) return false;
 	if (DeleteGraph(pushedDownImage) == -1) return false;
 
