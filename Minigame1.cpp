@@ -2,12 +2,17 @@
 //ゲーム : egg
 //氏名   : 永吉
 //
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include <DxLib.h>
 
 #include "Application.h"
 #include "Minigame1.h"
 
 Minigame1::Minigame1(void) {
+
+    gameImage = -1;
+    arrowImage = -1;
 
     InitializeGame();       //ゲームの初期化
     SetupTileColors();      //タイルの色設定
@@ -21,6 +26,8 @@ bool Minigame1::SystemInit(void) {
 
     gameImage = LoadGraph("image/minigame-2048.png");
     if (gameImage == -1) return false;
+    arrowImage = LoadGraph("image/arrow.png");
+    if (arrowImage == -1) return false;
 
     //int nt = LoadDivGraph("image/numberTile.png", MAX_NUMBERTILE, MAX_NUMBERTILE, 1, 64, 64, numberTile);
     //if (nt == -1) return false;
@@ -36,11 +43,14 @@ void Minigame1::GameInit(void) {
     nextScene_ID = E_SCENE_MINIGAME_1;
     score = 0;
 
+    arrowX = 200;
+    arrowY = 410;
+
     prevMouseLeft = nowMouseLeft = 0;
 
     //
-    prev0Key = now0Key = 0;
-    prevUpKey = prevDownKey = prevRightKey = prevLeftKey = nowUpKey = nowDownKey = nowRightKey = nowLeftKey = 0;
+    //prev0Key = now0Key = 0;
+    //prevUpKey = prevDownKey = prevRightKey = prevLeftKey = nowUpKey = nowDownKey = nowRightKey = nowLeftKey = 0;
 }
 
 void Minigame1::Update(void) {
@@ -59,6 +69,10 @@ void Minigame1::Update(void) {
 void Minigame1::Draw(void) {
 
     DrawGraph(0, 0, gameImage, true);
+    DrawGraph(arrowX, arrowY, arrowImage, true);                                    //上
+    DrawRotaGraph(arrowX + 16, arrowY + 80, 1, M_PI, arrowImage, true);             //下
+    DrawRotaGraph(arrowX + 48, arrowY + 48, 1, M_PI / 2, arrowImage, true);         //右
+    DrawRotaGraph(arrowX - 16, arrowY + 48, 1, 3 * M_PI / 2, arrowImage, true);     //左
 
     DrawGame();
 
@@ -70,7 +84,7 @@ void Minigame1::Draw(void) {
 bool Minigame1::Release(void) {
 
     if (DeleteGraph(gameImage) == -1) return false;
-    //if (DeleteGraph(squareImage) == -1) return false;
+    if (DeleteGraph(arrowImage) == -1) return false;
 
     return true;
 }
@@ -315,15 +329,28 @@ void Minigame1::UpdateGame() {
     }
 
     bool moved = false;
-    static int prevKey = 0;         //staticが付いているので初期化されず、前のフレームのキー状態を保持
-    
-    int nowKey = CheckHitKey(KEY_INPUT_UP) | CheckHitKey(KEY_INPUT_DOWN) | CheckHitKey(KEY_INPUT_LEFT) | CheckHitKey(KEY_INPUT_RIGHT) | CheckHitKey(KEY_INPUT_W) | CheckHitKey(KEY_INPUT_S) | CheckHitKey(KEY_INPUT_A) | CheckHitKey(KEY_INPUT_D);
-    /*
-    | : OR演算子
-    複数のキーのいずれかが押されれば0以外の値を返す
-    */
 
+    if (prevMouseLeft == 0 && nowMouseLeft == 1) {
+        if (mouseX >= arrowX && mouseX <= arrowX + 32 && mouseY >= arrowY && mouseY <= arrowY + 32) moved = MoveTiles(0, -1);               //上
+        else if (mouseX >= arrowX && mouseX <= arrowX + 32 && mouseY >= arrowY + 64 && mouseY <= arrowY + 96) moved = MoveTiles(0, 1);      //下
+        else if (mouseX >= arrowX + 32 && mouseX <= arrowX + 64 && mouseY >= arrowY + 32 && mouseY <= arrowY + 64) moved = MoveTiles(1, 0); //右
+        else if (mouseX >= arrowX - 32 && mouseX <= arrowX && mouseY >= arrowY + 32 && mouseY <= arrowY + 64) moved = MoveTiles(-1, 0);     //左
+
+        if (moved) {
+            CreateNewTile();    //移動したら新しいタイルを生成
+            if (CheckGameOver()) {
+                nowGameState = GAME_OVER;
+            }
+        }
+    }
+
+    /*
     //デバッグ用、マウス操作に変更する
+    static int prevKey = 0;         //staticが付いているので初期化されず、前のフレームのキー状態を保持
+    int nowKey = CheckHitKey(KEY_INPUT_UP) | CheckHitKey(KEY_INPUT_DOWN) | CheckHitKey(KEY_INPUT_LEFT) | CheckHitKey(KEY_INPUT_RIGHT) | CheckHitKey(KEY_INPUT_W) | CheckHitKey(KEY_INPUT_S) | CheckHitKey(KEY_INPUT_A) | CheckHitKey(KEY_INPUT_D);
+    //| : OR演算子
+    //複数のキーのいずれかが押されれば0以外の値を返す
+    
     //キーが押された瞬間のみ処理
     if (nowKey != 0 && prevKey == 0) {
         if (CheckHitKey(KEY_INPUT_UP) || CheckHitKey(KEY_INPUT_W)) {
@@ -347,6 +374,7 @@ void Minigame1::UpdateGame() {
         }
     }
     prevKey = nowKey;           //現在のキー状態を保存
+    */
 }
 
 //ゲームオーバー判定

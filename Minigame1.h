@@ -47,27 +47,25 @@ private:
 	long long score = 0;				//スコア
 
 	int gameImage;						//ミニゲーム背景画像
+	int arrowImage;						//矢印画像
+
+	int arrowX, arrowY;					//矢印の座標
 
 	int mouseX, mouseY;					//マウス座標
 	int prevMouseLeft, nowMouseLeft;	//マウスの入力状態を格納する変数
 
 	eScene_ID nextScene_ID;				//次に遷移するシーンID
 
-	//デバッグ
-	int prev0Key, now0Key;
-	int prevUpKey, prevDownKey, prevRightKey, prevLeftKey, nowUpKey, nowDownKey, nowRightKey, nowLeftKey;
-
-	// --- 関数プロトタイプ宣言 ---
+	void SetupTileColors();				//タイルの色設定
 	void InitializeGame();
 	void CreateNewTile();
-	bool MoveTiles(int dx, int dy); // dx, dyは移動方向 (-1, 0, 1)
+	bool MoveTiles(int dx, int dy);		//dx, dyは移動方向 (-1, 0, 1)
 	void DrawGame();
 	void DrawTile(int x, int y, int value);
 	void UpdateGame();
 	bool CheckGameOver();
-	void SetupTileColors(); // タイルの色設定
 
-	// 乱数生成器
-	//std::random_device seed_gen;
-	//std::mt19937 engine(seed_gen());
+	//デバッグ
+	//int prev0Key, now0Key;
+	//int prevUpKey, prevDownKey, prevRightKey, prevLeftKey, nowUpKey, nowDownKey, nowRightKey, nowLeftKey;
 };

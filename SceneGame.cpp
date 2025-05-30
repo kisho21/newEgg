@@ -104,7 +104,7 @@ void SceneGame::Draw(void) {
 
 	//DrawGuide();
 
-	//DrawBox(0, 0, 100, 100, 0x000000, true);
+	//DrawBox(0, 0, 32, 32, 0xff0000, true);
 	DrawCircle(mouseX, mouseY, 5, GetColor(0, 0, 255));		//マウス座標の場所に円の描画
 	//DrawFormatString(0, 0, 0x000000, "%d", money);
 }
