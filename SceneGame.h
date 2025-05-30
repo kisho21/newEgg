@@ -25,9 +25,10 @@ private:
 	//ゲームの状態を表す列挙型
 	enum GameState {
 		STATE_PLAY,							//プレイ中
-		STATE_SELECTGAME,					//ミニゲーム選択中
-		STATE_GUIDE,						//操作ガイド表示中
-		STATE_PAUSE							//一時停止、余裕あればつくる
+		STATE_SELECTGAME,					//ミニゲーム選択スライド
+		STATE_SHOP,							//買い物スライド
+		STATE_ITEM,							//アイテム一覧スライド
+		STATE_OPTION						//設定スライド
 	};
 
 	GameState nowGameState = STATE_PLAY;	//現在のゲームの状態、初期プレイ中
@@ -47,8 +48,9 @@ private:
 
 	eScene_ID nextScene_ID;					//次に遷移するシーンID
 
-	void MenuSlide(void);
-	void SelectGame(void);
+	void MenuSlide(void);		//メニューのスライド処理
+	void SelectMenu(void);		//メニューの選択
+	void SelectGame(void);		//ミニゲームの選択
 
 	//デバッグ用
 	int prev1Key, now1Key;

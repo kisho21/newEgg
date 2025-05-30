@@ -67,17 +67,14 @@ void SceneGame::Update(void) {
 	GetMousePoint(&mouseX, &mouseY);		//マウスの座標を取得
 
 	//状態ごとの更新処理
+
 	switch (nowGameState) {
 	case STATE_PLAY:
 		if (nowGameState == STATE_PLAY) {
 			charaInst->Update();
 			uiInit->Update();
 
-			int iconx = uiInit->GetIconX();
-			int icony = uiInit->GetIconY();
-			if (mouseX > iconx && mouseX<iconx + 64 && mouseY>icony && mouseY < icony + 64 && prevMouseLeft == 1 && nowMouseLeft == 0) {
-				nowGameState = STATE_SELECTGAME;
-			}
+			SelectMenu();
 		}
 		break;
 	case STATE_SELECTGAME:
@@ -85,6 +82,26 @@ void SceneGame::Update(void) {
 
 		MenuSlide();		//メニューのスライド処理
 		SelectGame();		//ミニゲームの選択
+		break;
+	case STATE_SHOP:
+		uiInit->Update();
+
+		MenuSlide();		//メニューのスライド処理
+
+		break;
+	case STATE_ITEM:
+		uiInit->Update();
+
+		MenuSlide();		//メニューのスライド処理
+
+		break;
+
+	case STATE_OPTION:
+		uiInit->Update();
+
+		MenuSlide();		//メニューのスライド処理
+
+		break;
 	}
 
 	//デバッグ用
@@ -158,7 +175,18 @@ void SceneGame::MenuSlide(void) {
 	}
 }
 
-//
+//メニューの選択
+void SceneGame::SelectMenu(void) {
+
+	int iconx = uiInit->GetIconX();
+	int icony = uiInit->GetIconY();
+	if (mouseX > iconx && mouseX < iconx + Ui::ICON_SIZE && mouseY > icony && mouseY < icony + Ui::ICON_SIZE && prevMouseLeft == 1 && nowMouseLeft == 0) nowGameState = STATE_SELECTGAME;
+	else if (mouseX >= iconx + Ui::ICON_SIZE + 8 && mouseX <= iconx + Ui::ICON_SIZE * 2 + 8 && mouseY >= icony && mouseY <= icony + Ui::ICON_SIZE && prevMouseLeft == 1 && nowMouseLeft == 0) nowGameState = STATE_SHOP;
+	else if (mouseX >= iconx + Ui::ICON_SIZE * 2 + 16 && mouseX <= iconx + Ui::ICON_SIZE * 3 + 16 && mouseY >= icony && mouseY <= icony + Ui::ICON_SIZE && prevMouseLeft == 1 && nowMouseLeft == 0) nowGameState = STATE_ITEM;
+	else if (mouseX >= iconx + Ui::ICON_SIZE * 3 + 24 && mouseX <= iconx + Ui::ICON_SIZE * 4 + 24 && mouseY >= icony && mouseY <= icony + Ui::ICON_SIZE && prevMouseLeft == 1 && nowMouseLeft == 0) nowGameState = STATE_OPTION;
+}
+
+//ミニゲームの選択
 void SceneGame::SelectGame(void) {
 
 	int mGameY = uiInit->GetMenuY() + 120;

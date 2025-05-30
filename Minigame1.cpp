@@ -29,9 +29,6 @@ bool Minigame1::SystemInit(void) {
     arrowImage = LoadGraph("image/arrow.png");
     if (arrowImage == -1) return false;
 
-    //int nt = LoadDivGraph("image/numberTile.png", MAX_NUMBERTILE, MAX_NUMBERTILE, 1, 64, 64, numberTile);
-    //if (nt == -1) return false;
-
     mouseX = mouseY = 0;
 
     return true;
@@ -47,10 +44,6 @@ void Minigame1::GameInit(void) {
     arrowY = 410;
 
     prevMouseLeft = nowMouseLeft = 0;
-
-    //
-    //prev0Key = now0Key = 0;
-    //prevUpKey = prevDownKey = prevRightKey = prevLeftKey = nowUpKey = nowDownKey = nowRightKey = nowLeftKey = 0;
 }
 
 void Minigame1::Update(void) {
@@ -61,9 +54,6 @@ void Minigame1::Update(void) {
     GetMousePoint(&mouseX, &mouseY);		//マウスの座標を取得
 
     UpdateGame();
-
-    //デバッグ
-    
 }
 
 void Minigame1::Draw(void) {
@@ -78,7 +68,6 @@ void Minigame1::Draw(void) {
 
     //デバッグ
     DrawCircle(mouseX, mouseY, 5, GetColor(0, 0, 255));		//マウス座標の場所に円の描画
-    //DrawFormatString(0, 0, 0x000000, "%d", tileNo);
 }
 
 bool Minigame1::Release(void) {
@@ -344,8 +333,8 @@ void Minigame1::UpdateGame() {
         }
     }
 
-    /*
     //デバッグ用、マウス操作に変更する
+    /*
     static int prevKey = 0;         //staticが付いているので初期化されず、前のフレームのキー状態を保持
     int nowKey = CheckHitKey(KEY_INPUT_UP) | CheckHitKey(KEY_INPUT_DOWN) | CheckHitKey(KEY_INPUT_LEFT) | CheckHitKey(KEY_INPUT_RIGHT) | CheckHitKey(KEY_INPUT_W) | CheckHitKey(KEY_INPUT_S) | CheckHitKey(KEY_INPUT_A) | CheckHitKey(KEY_INPUT_D);
     //| : OR演算子
