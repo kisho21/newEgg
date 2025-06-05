@@ -19,6 +19,7 @@ public:
 	void GameInit(void);
 	void Update(void);
 	void Draw(void);
+	void DrawMinigame(void);
 	bool Release(void);
 
 	int GetIconX(void) { return iconX; }
@@ -36,7 +37,6 @@ private:
 	int bubbleImage[MAX_BUBBLE];
 	int upsideImage;																//画面上部の枠
 	int coinImage;																	//お金アイコン画像
-	int growthImage;																//成長ゲージ画像、仮置き段階
 	int menuImage;																	//メニュー画像
 	int minigameImage, shopImage, bagImage, setImage;								//メニューアイコン画像
 	int pushedMinigameImage, pushedShopImage, pushedBagImage, pushedSetImage;		//押されたアイコン画像

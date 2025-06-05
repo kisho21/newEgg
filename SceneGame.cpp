@@ -11,6 +11,7 @@
 
 SceneGame::SceneGame(void) {
 
+	growthImage = -1;
 	gameImage = -1;
 
 	charaInst = nullptr;
@@ -24,7 +25,9 @@ SceneGame::~SceneGame(void) {
 bool SceneGame::SystemInit(void) {
 
 	//画像の読み込み
-	gameImage = LoadGraph("image/game2.png");
+	growthImage = LoadGraph("image/growth.png");
+	if (growthImage == -1) return false;
+	gameImage = LoadGraph("image/game.png");
 	if (gameImage == -1) return false;
 
 	charaInst = new Character();
@@ -34,8 +37,6 @@ bool SceneGame::SystemInit(void) {
 
 	charaInst->SystemInit();
 	uiInit->SystemInit();
-
-	
 
 	mouseX = mouseY = 0;
 
@@ -66,16 +67,14 @@ void SceneGame::Update(void) {
 
 	GetMousePoint(&mouseX, &mouseY);		//マウスの座標を取得
 
-	//状態ごとの更新処理
+	SelectMenu();							//メニューの選択
 
+	//状態ごとの更新処理
 	switch (nowGameState) {
 	case STATE_PLAY:
-		if (nowGameState == STATE_PLAY) {
-			charaInst->Update();
-			uiInit->Update();
+		charaInst->Update();
+		uiInit->Update();
 
-			SelectMenu();
-		}
 		break;
 	case STATE_SELECTGAME:
 		uiInit->Update();
@@ -114,20 +113,41 @@ void SceneGame::Update(void) {
 
 void SceneGame::Draw(void) {
 
+	DrawGraph(7, 48, growthImage, true);				//成長ゲージ仮置き、ゲージを可変にする
 	DrawGraph(0, 0, gameImage, true);
 
 	charaInst->Draw();
 	uiInit->Draw();
 
-	//DrawGuide();
+	switch (nowGameState) {
+	case STATE_PLAY:
+		
+		break;
+	case STATE_SELECTGAME:
+		uiInit->DrawMinigame();
+		break;
+	case STATE_SHOP:
+
+		break;
+	case STATE_ITEM:
+
+		break;
+
+	case STATE_OPTION:
+
+		break;
+	}
 
 	//DrawBox(0, 0, 32, 32, 0xff0000, true);
 	DrawCircle(mouseX, mouseY, 5, GetColor(0, 0, 255));		//マウス座標の場所に円の描画
 	//DrawFormatString(0, 0, 0x000000, "%d", money);
+	//if(nowGameState== STATE_SELECTGAME)DrawString(0, 0, "1", true);
+	//else DrawString(0, 0, "0", true);
 }
 
 bool SceneGame::Release(void) {
 	
+	if (DeleteGraph(growthImage) == -1) return false;
 	if (DeleteGraph(gameImage) == -1) return false;
 
 	uiInit->Release();
@@ -191,7 +211,7 @@ void SceneGame::SelectGame(void) {
 
 	int mGameY = uiInit->GetMenuY() + 120;
 	//2048を選択
-	if (mouseX > 9 && mouseX<93 && mouseY>mGameY && mouseY < mGameY + 84 && prevMouseLeft == 1 && nowMouseLeft == 0) {
+	if (mouseX > 9 && mouseX < 93 && mouseY > mGameY && mouseY < mGameY + 84 && prevMouseLeft == 1 && nowMouseLeft == 0) {
 		nextScene_ID = E_SCENE_MINIGAME_1;
 	}
 }

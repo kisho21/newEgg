@@ -11,7 +11,6 @@ Ui::Ui(void) {
 
 	upsideImage = -1;
 	coinImage = -1;
-	growthImage = -1;
 	menuImage = -1;
 	minigameImage = shopImage = bagImage = setImage = -1;
 	pushedMinigameImage = pushedShopImage = pushedBagImage = pushedSetImage = -1;
@@ -32,8 +31,6 @@ bool Ui::SystemInit(void) {
 	if (upsideImage == -1) return false;
 	coinImage = LoadGraph("image/coin2.png");
 	if (coinImage == -1) return false;
-	growthImage = LoadGraph("image/growth.png");
-	if (growthImage == -1) return false;
 
 	menuImage = LoadGraph("image/UiMenu.png");
 	if (menuImage == -1) return false;
@@ -115,8 +112,6 @@ void Ui::Draw(void) {
 	DrawGraph(Application::WINDOW_SIZE_WID / 2 + 2, 3, upsideImage, true);
 	DrawGraph(Application::WINDOW_SIZE_WID / 2 + 8, 7, coinImage, true);
 
-	DrawGraph(6, 48, growthImage, true);				//成長ゲージ仮置き、ゲージを可変にする
-
 	DrawGraph(130, 100, bubbleImage[frame], true);
 
 	//メニューの描画
@@ -129,8 +124,7 @@ void Ui::Draw(void) {
 	else DrawGraph(iconX + ICON_SIZE * 2 + 16, iconY, pushedBagImage, true);
 	if (onSet == false) DrawGraph(iconX + ICON_SIZE * 3 + 24, iconY, setImage, true);
 	else DrawGraph(iconX + ICON_SIZE * 3 + 24, iconY, pushedSetImage, true);
-	//ミニゲームアイコンの描画
-	DrawGraph(9, menuY + 120, mini1Image, true);
+	
 	//メニュー下降ボタンの設置
 	if (onDown == false) DrawGraph(Application::WINDOW_SIZE_WID / 2 - 32, menuY + 400, downImage, true);
 	else DrawGraph(Application::WINDOW_SIZE_WID / 2 - 32, menuY + 400, pushedDownImage, true);
@@ -139,11 +133,16 @@ void Ui::Draw(void) {
 	//if (checkDown)DrawBox(0, 0, 100, 100, 0xffffff, true);
 }
 
+void Ui::DrawMinigame(void) {
+
+	//ミニゲームアイコンの描画
+	DrawGraph(9, menuY + 120, mini1Image, true);
+}
+
 bool Ui::Release(void) {
 
 	if (DeleteGraph(menuImage) == -1) return false;
 	if (DeleteGraph(coinImage) == -1) return false;
-	if (DeleteGraph(growthImage) == -1) return false;
 	if (DeleteGraph(minigameImage) == -1) return false;
 	if (DeleteGraph(shopImage) == -1) return false;
 	if (DeleteGraph(bagImage) == -1) return false;

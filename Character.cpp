@@ -33,14 +33,7 @@ void Character::GameInit(void) {
 
 void Character::Update(void) {
 
-	if (charaFrameAdjust == 60) {
-		charaFrame++;
-		charaFrameAdjust = 0;
-	}
-	if (charaFrame == MAX_CHARA) {
-		charaFrame = 0;
-	}
-	charaFrameAdjust++;
+	Animation();
 }
 
 void Character::Draw(void) {
@@ -51,4 +44,16 @@ void Character::Draw(void) {
 bool Character::Release(void) {
 
 	return true;
+}
+
+void Character::Animation(void) {
+
+	if (charaFrameAdjust == 60) {
+		charaFrame++;
+		charaFrameAdjust = 0;
+	}
+	if (charaFrame == MAX_CHARA) {
+		charaFrame = 0;
+	}
+	charaFrameAdjust++;
 }

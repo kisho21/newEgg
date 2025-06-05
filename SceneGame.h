@@ -37,9 +37,11 @@ private:
 	Character* charaInst;
 	Ui* uiInit;
 
+	int growthImage;						//成長ゲージ画像、仮置き段階
 	int gameImage;							//ゲーム画面の背景画像
 
-	//bool uiFlg;							//UIの表示フラグ、ここに作るか未定、まだ宣言のみ
+	//int growthPoint;						//成長ポイント
+	//int growthX;							//成長ゲージの長さ、X座標を変えることで表す
 
 	int mouseX, mouseY;						//マウス座標
 	int prevMouseLeft, nowMouseLeft;		//マウスの入力状態を格納する変数
@@ -48,9 +50,9 @@ private:
 
 	eScene_ID nextScene_ID;					//次に遷移するシーンID
 
-	void MenuSlide(void);		//メニューのスライド処理
-	void SelectMenu(void);		//メニューの選択
-	void SelectGame(void);		//ミニゲームの選択
+	void MenuSlide(void);					//メニューのスライド処理
+	void SelectMenu(void);					//メニューの選択
+	void SelectGame(void);					//ミニゲームの選択
 
 	//デバッグ用
 	int prev1Key, now1Key;

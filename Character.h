@@ -27,4 +27,6 @@ private:
 	int charaX, charaY;
 	int charaFrame;								//アニメーションの表示フレーム
 	int charaFrameAdjust;						//アニメーション表示の調整フレーム
+
+	void Animation(void);
 };
