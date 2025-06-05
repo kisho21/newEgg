@@ -34,7 +34,7 @@ private:
 	GameState nowGameState = STATE_PLAY;	//現在のゲームの状態、初期プレイ中
 
 	//各クラスのインスタンスのポインタの追加
-	Character* charaInst;
+	//Character* charaInst;
 	Ui* uiInit;
 
 	int growthImage;						//成長ゲージ画像、仮置き段階

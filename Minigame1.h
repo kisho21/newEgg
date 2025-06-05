@@ -66,6 +66,7 @@ private:
 	bool CheckGameOver();
 
 	//デバッグ
-	//int prev0Key, now0Key;
+	int prev1Key, now1Key;
+	int prev0Key, now0Key;
 	//int prevUpKey, prevDownKey, prevRightKey, prevLeftKey, nowUpKey, nowDownKey, nowRightKey, nowLeftKey;
 };

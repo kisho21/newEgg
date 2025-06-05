@@ -7,6 +7,7 @@
 #include <DxLib.h>
 
 #include "Application.h"
+#include "Character.h"
 #include "Minigame1.h"
 
 Minigame1::Minigame1(void) {
@@ -54,6 +55,18 @@ void Minigame1::Update(void) {
     GetMousePoint(&mouseX, &mouseY);		//マウスの座標を取得
 
     UpdateGame();
+
+    //デバッグ用
+    prev1Key = now1Key;
+    now1Key = CheckHitKey(KEY_INPUT_1);
+    if (prev1Key == 1 && now1Key == 0) {
+        nextScene_ID = E_SCENE_GAME;
+    }
+    prev0Key = now0Key;
+    now0Key = CheckHitKey(KEY_INPUT_0);
+    if (prev0Key == 1 && now0Key == 0) {
+        Character::getInst()->AddMoney(5);
+    }
 }
 
 void Minigame1::Draw(void) {
@@ -67,6 +80,8 @@ void Minigame1::Draw(void) {
     DrawGame();
 
     //デバッグ
+    //int m = Character::getInst()->GetMoney();
+    //DrawFormatString(0, 0, 0x000000, "%d", m);
     DrawCircle(mouseX, mouseY, 5, GetColor(0, 0, 255));		//マウス座標の場所に円の描画
 }
 

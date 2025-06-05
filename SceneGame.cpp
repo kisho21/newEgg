@@ -14,7 +14,7 @@ SceneGame::SceneGame(void) {
 	growthImage = -1;
 	gameImage = -1;
 
-	charaInst = nullptr;
+	//charaInst = nullptr;
 	uiInit = nullptr;
 }
 
@@ -30,12 +30,13 @@ bool SceneGame::SystemInit(void) {
 	gameImage = LoadGraph("image/game.png");
 	if (gameImage == -1) return false;
 
-	charaInst = new Character();
-	if (charaInst == nullptr) return false;
+	//charaInst = new Character();
+	//if (charaInst == nullptr) return false;
 	uiInit = new Ui();
 	if (uiInit == nullptr) return false;
 
-	charaInst->SystemInit();
+	//charaInst->SystemInit();
+	Character::getInst()->SystemInit();
 	uiInit->SystemInit();
 
 	mouseX = mouseY = 0;
@@ -50,7 +51,8 @@ void SceneGame::GameInit(void) {
 	//次のシーンの初期設定
 	nextScene_ID = E_SCENE_GAME;
 
-	charaInst->GameInit();
+	//charaInst->GameInit();
+	Character::getInst()->GameInit();
 	uiInit->GameInit();
 
 	prevMouseLeft = nowMouseLeft = 0;
@@ -72,7 +74,8 @@ void SceneGame::Update(void) {
 	//状態ごとの更新処理
 	switch (nowGameState) {
 	case STATE_PLAY:
-		charaInst->Update();
+		//charaInst->Update();
+		Character::getInst()->Update();
 		uiInit->Update();
 
 		break;
@@ -107,7 +110,8 @@ void SceneGame::Update(void) {
 	prev1Key = now1Key;
 	now1Key = CheckHitKey(KEY_INPUT_1);
 	if (prev1Key == 1 && now1Key == 0) {
-		nextScene_ID = E_SCENE_TITLE;
+		//nextScene_ID = E_SCENE_TITLE;
+		Character::getInst()->AddMoney(5);
 	}
 }
 
@@ -116,8 +120,12 @@ void SceneGame::Draw(void) {
 	DrawGraph(7, 48, growthImage, true);				//成長ゲージ仮置き、ゲージを可変にする
 	DrawGraph(0, 0, gameImage, true);
 
-	charaInst->Draw();
+	//charaInst->Draw();
+	Character::getInst()->Draw();
 	uiInit->Draw();
+
+	int m = Character::getInst()->GetMoney();
+	DrawFormatString(0, 0, 0x000000, "%d", m);
 
 	switch (nowGameState) {
 	case STATE_PLAY:
@@ -153,10 +161,6 @@ bool SceneGame::Release(void) {
 	uiInit->Release();
 	delete uiInit;
 	uiInit = nullptr;
-
-	charaInst->Release();
-	delete charaInst;
-	charaInst = nullptr;
 
 	return true;
 }

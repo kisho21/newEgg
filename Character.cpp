@@ -7,12 +7,23 @@
 #include "Application.h"
 #include "Character.h"
 
-Character::Character(void) {
+//シングルトンインスタンスの初期化
+Character* Character::inst = nullptr;
+
+Character::Character(void) :growthRate(0), gameMoney(1000) {
 
 }
 
 Character::~Character(void) {
 
+}
+
+//シングルトンインスタンスを取得する
+Character* Character::getInst() {
+
+	if (inst == nullptr) inst = new Character();
+
+	return inst;
 }
 
 bool Character::SystemInit(void) {
@@ -56,4 +67,31 @@ void Character::Animation(void) {
 		charaFrame = 0;
 	}
 	charaFrameAdjust++;
+}
+
+//成長度を設定
+void Character::SetGrowth(int growth) {
+
+	if (growth >= 0) growthRate = growth;	//最小値のチェック
+	else growthRate = 0;					//最小値に設定
+}
+
+//成長度を増加させる
+void Character::AddGrowth(int amount) {
+
+	if (amount > 0) growthRate += amount;
+}
+
+//所持金を設定
+void Character::SetMoney(int money) {
+
+	if (money >= 0) gameMoney = money;
+	else gameMoney = 0;
+}
+
+//所持金を増加させる
+void Character::AddMoney(int amount) {
+
+	gameMoney += amount;
+	if (gameMoney < 0) gameMoney = 0;
 }
