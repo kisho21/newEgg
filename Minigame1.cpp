@@ -30,6 +30,11 @@ bool Minigame1::SystemInit(void) {
     arrowImage = LoadGraph("image/arrow.png");
     if (arrowImage == -1) return false;
 
+    //フォントハンドルの作成
+    fontHandles[32] = CreateFontToHandle("メイリオ", 32, -1, DX_FONTTYPE_NORMAL);
+    fontHandles[28] = CreateFontToHandle("メイリオ", 28, -1, DX_FONTTYPE_NORMAL);
+    fontHandles[24] = CreateFontToHandle("メイリオ", 24, -1, DX_FONTTYPE_NORMAL);
+
     mouseX = mouseY = 0;
 
     return true;
@@ -80,8 +85,8 @@ void Minigame1::Draw(void) {
     DrawGame();
 
     //デバッグ
-    //int m = Character::getInst()->GetMoney();
-    //DrawFormatString(0, 0, 0x000000, "%d", m);
+    int m = Character::getInst()->GetMoney();
+    DrawFormatString(0, 0, 0x000000, "%d", m);
     DrawCircle(mouseX, mouseY, 5, GetColor(0, 0, 255));		//マウス座標の場所に円の描画
 }
 
@@ -90,6 +95,7 @@ bool Minigame1::Release(void) {
     if (DeleteGraph(gameImage) == -1) return false;
     if (DeleteGraph(arrowImage) == -1) return false;
 
+    
     return true;
 }
 
@@ -104,10 +110,10 @@ void Minigame1::SetupTileColors() {
     tileColors[32] = GetColor(246, 124, 95);
     tileColors[64] = GetColor(246, 94, 59);
     tileColors[128] = GetColor(237, 207, 114);
-    tileColors[256] = GetColor(237, 204, 97);
-    tileColors[512] = GetColor(237, 200, 80);
-    tileColors[1024] = GetColor(237, 197, 63);
-    tileColors[2048] = GetColor(237, 194, 46);
+    tileColors[256] = GetColor(237, 189, 62);
+    tileColors[512] = GetColor(255, 170, 36);
+    tileColors[1024] = GetColor(255, 112, 8);
+    tileColors[2048] = GetColor(255, 0, 0);
 }
 
 //ゲームの初期化
@@ -295,29 +301,23 @@ void Minigame1::DrawTile(int col, int row, int value) {
 
     //タイルの数値
     if (value != 0) {
-        SetFontSize(32);
-        //値の桁数を計算する
-        int digitCount = 0;
-        if (value > 0) {
-            digitCount = static_cast<int>(log10(value)) + 1;
-            /*
-            10を底とする対数をとる
-            log10(100)なら2となる
-            +1して桁数を計算する
-            */
+        int fontSize = 32;                      //デフォルトサイズ
+        if (value >= 1000) {                    //4桁以上なら小さくする
+            fontSize = 24;
         }
-        else {
-            digitCount = 1;//0の場合
+        else if (value >= 100) {                //3桁なら少し小さくする
+            fontSize = 28;
         }
-        //数値の桁数に応じてフォントサイズを調整
-        //文字列の幅と高さを取得して中央に描画
-        char text[10];
-        sprintf_s(text, "%d", value);                               //valueを文字列に変換
-        int textWidth = GetDrawStringWidth(text, strlen(text));     //指定した文字列の幅を取得
-        int textHeight = GetFontSize();                             //指定した文字列の高さを取得
+        
+        int fontHandle = fontHandles[fontSize]; //対応するフォントハンドルを取得
 
-        DrawString(x1 + (TILE_SIZE - textWidth) / 2, y1 + (TILE_SIZE - textHeight) / 2, text, GetColor(0, 0, 0));
-        SetFontSize(16);
+        char text[10];
+        sprintf_s(text, "%d", value);
+        int textWidth = GetDrawStringWidthToHandle(text, strlen(text), fontHandle);
+        int textHeight = GetFontSize();
+
+        DrawStringToHandle(x1 + (TILE_SIZE - textWidth) / 2, y1 + (TILE_SIZE - textHeight) / 2, text, GetColor(0, 0, 0), fontHandle);
+        // SetFontSize(16);     //この行は不要になる
     }
 }
 
@@ -329,6 +329,8 @@ void Minigame1::UpdateGame() {
         if (CheckHitKey(KEY_INPUT_R)) {
             InitializeGame();
         }
+
+        if(addmoney) GameOver();
         return;     //ゲームオーバー、クリア時にタイルが動かないようにする
     }
 
@@ -343,6 +345,7 @@ void Minigame1::UpdateGame() {
         if (moved) {
             CreateNewTile();    //移動したら新しいタイルを生成
             if (CheckGameOver()) {
+                addmoney = true;
                 nowGameState = GAME_OVER;
             }
         }
@@ -373,6 +376,7 @@ void Minigame1::UpdateGame() {
         if (moved) {
             CreateNewTile();    //移動したら新しいタイルを生成
             if (CheckGameOver()) {
+                addmoney = true;
                 nowGameState = GAME_OVER;
             }
         }
@@ -382,7 +386,6 @@ void Minigame1::UpdateGame() {
 }
 
 //ゲームオーバー判定
-//ここにスコア→お金を追加
 bool Minigame1::CheckGameOver() {
 
     //空きマスがあるか
@@ -408,4 +411,14 @@ bool Minigame1::CheckGameOver() {
 
     //空きマスも結合できるタイルもない→ゲームオーバー
     return true;
+}
+
+//ゲームオーバー処理
+void Minigame1::GameOver() {
+
+    if (addmoney) {
+        int income = score / 10;
+        Character::getInst()->AddMoney(income);
+        addmoney = false;
+    }
 }

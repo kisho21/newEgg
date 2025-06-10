@@ -42,6 +42,9 @@ private:
 	GameState nowGameState = PLAYING;
 
 	std::map<int, int> tileColors;		//タイルの色を定義するマップ（数値に応じて色を変える）
+	std::map<int, int> fontHandles;		//フォントハンドルのマップ
+
+	bool addmoney = false;
 
 	int board[BOARD_SIZE][BOARD_SIZE];	//ゲームボード
 	long long score = 0;				//スコア
@@ -64,6 +67,7 @@ private:
 	void DrawTile(int x, int y, int value);
 	void UpdateGame();
 	bool CheckGameOver();
+	void GameOver();
 
 	//デバッグ
 	int prev1Key, now1Key;
