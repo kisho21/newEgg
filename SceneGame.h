@@ -40,6 +40,8 @@ private:
 	int growthImage;						//成長ゲージ画像、仮置き段階
 	int gameImage;							//ゲーム画面の背景画像
 
+	char moneyText[32];						//所持金を表示させるのに十分なバッファ
+
 	//int growthPoint;						//成長ポイント
 	//int growthX;							//成長ゲージの長さ、X座標を変えることで表す
 
@@ -50,6 +52,7 @@ private:
 
 	eScene_ID nextScene_ID;					//次に遷移するシーンID
 
+	void DrawFontProc(void);				//文字列の表示処理
 	void MenuSlide(void);					//メニューのスライド処理
 	void SelectMenu(void);					//メニューの選択
 	void SelectGame(void);					//ミニゲームの選択

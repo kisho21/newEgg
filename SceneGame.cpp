@@ -111,7 +111,7 @@ void SceneGame::Update(void) {
 	now1Key = CheckHitKey(KEY_INPUT_1);
 	if (prev1Key == 1 && now1Key == 0) {
 		//nextScene_ID = E_SCENE_TITLE;
-		Character::getInst()->AddMoney(5);
+		Character::getInst()->AddMoney(500);
 	}
 }
 
@@ -124,8 +124,7 @@ void SceneGame::Draw(void) {
 	Character::getInst()->Draw();
 	uiInit->Draw();
 
-	int m = Character::getInst()->GetMoney();
-	DrawFormatString(0, 0, 0x000000, "%d", m);
+	DrawFontProc();
 
 	switch (nowGameState) {
 	case STATE_PLAY:
@@ -163,6 +162,19 @@ bool SceneGame::Release(void) {
 	uiInit = nullptr;
 
 	return true;
+}
+
+//文字列の表示処理
+void SceneGame::DrawFontProc(void) {
+
+	int m = Character::getInst()->GetMoney();
+	sprintf_s(moneyText, "%d", m);
+
+	int textWidth = GetDrawStringWidth(moneyText, strlen(moneyText));
+	int moneyX = Application::WINDOW_SIZE_WID - textWidth - 10;
+	int moneyY = 16;
+
+	DrawString(moneyX, moneyY, moneyText, 0x000000);
 }
 
 //メニューのスライド処理
