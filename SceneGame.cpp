@@ -111,8 +111,9 @@ void SceneGame::Update(void) {
 	now1Key = CheckHitKey(KEY_INPUT_1);
 	if (prev1Key == 1 && now1Key == 0) {
 		//nextScene_ID = E_SCENE_TITLE;
-		Character::getInst()->AddMoney(500);
+		Character::getInst()->AddMoney(1000);
 	}
+	Character::getInst()->RequestCount();
 }
 
 void SceneGame::Draw(void) {
@@ -150,6 +151,9 @@ void SceneGame::Draw(void) {
 	//DrawFormatString(0, 0, 0x000000, "%d", money);
 	//if(nowGameState== STATE_SELECTGAME)DrawString(0, 0, "1", true);
 	//else DrawString(0, 0, "0", true);
+
+	int r = Character::getInst()->GetRequest();
+	DrawFormatString(0, 0, 0x000000, "%d", r);
 }
 
 bool SceneGame::Release(void) {

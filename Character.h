@@ -32,13 +32,54 @@ public:
 	int GetMoney() const { return gameMoney; }		//所持金を取得
 	void SetMoney(int money);						//所持金を設定
 	void AddMoney(int amount);						//所持金を増加させる
+	//要求カウント関係
+	int GetRequest() const { return requestCount; }	//要求カウントを取得
+	void SetRequest(int request);					//要求カウントを設定
+	void AddRequest(int amount);					//要求カウントを増加させる
+	void SetRequestFlgF(void) { requestFlg = false; }
+	/*
+	カウントは常に加算し続ける
+	一定に達したら何かしらの要求を提示
+	要求提示中はカウントしない
+	要求を解消したらカウントを0に初期化し再度加算を始める
+	*/
+
+	void RequestCount(void);
+	void Request(void);
+	void DrawRequest(void);
+
+	void CharaPlay(void);
+	void CharaEat(void);
+	void CharaToilet(void);
+	void CharaBath(void);
+	void CharaTouth(void);
 
 private:
 	int growthRate;
 	int gameMoney;
+	int requestCount;
+	bool requestFlg;
+
+	enum CharaWantTo {
+		normal,
+		play,
+		eat,
+		toilet,
+		bath,
+		touch,
+
+		max
+	};
+	CharaWantTo wantTo = normal;
+	//CharaWantTo wantsNum;						//生成された乱数から要素を取得する変数
+
+	bool playFlg;
+	bool eatFlg;
+	bool toiletFlg;
+	bool bathFlg;
+	bool touchFlg;
 
 	int charaImage[MAX_CHARA];
-
 	int charaX, charaY;
 	int charaFrame;								//アニメーションの表示フレーム
 	int charaFrameAdjust;						//アニメーション表示の調整フレーム

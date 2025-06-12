@@ -25,7 +25,7 @@ Minigame1::~Minigame1(void) {
 
 bool Minigame1::SystemInit(void) {
 
-    gameImage = LoadGraph("image/minigame-2048.png");
+    gameImage = LoadGraph("image/minigameFrame.png");
     if (gameImage == -1) return false;
     arrowImage = LoadGraph("image/arrow.png");
     if (arrowImage == -1) return false;
@@ -72,6 +72,7 @@ void Minigame1::Update(void) {
     if (prev0Key == 1 && now0Key == 0) {
         Character::getInst()->AddMoney(5);
     }
+    Character::getInst()->RequestCount();
 }
 
 void Minigame1::Draw(void) {
@@ -85,8 +86,10 @@ void Minigame1::Draw(void) {
     DrawGame();
 
     //デバッグ
-    int m = Character::getInst()->GetMoney();
-    DrawFormatString(0, 0, 0x000000, "%d", m);
+    //int m = Character::getInst()->GetMoney();
+    //DrawFormatString(0, 0, 0x000000, "%d", m);
+    int r = Character::getInst()->GetRequest();
+    DrawFormatString(0, 0, 0x000000, "%d", r);
     DrawCircle(mouseX, mouseY, 5, GetColor(0, 0, 255));		//マウス座標の場所に円の描画
 }
 
@@ -137,8 +140,8 @@ void Minigame1::InitializeGame() {
 void Minigame1::CreateNewTile() {
 
     //staticをつけることで、呼び出された最初の一回は初期化し、それ以降は値を保持する
-    static std::random_device seed_gen;
-    static std::mt19937 engine(seed_gen());
+    static std::random_device rd;
+    static std::mt19937 rand(rd());
     /*
     random_device : 非決定論的な乱数生成エンジン
                   : 擬似乱数生成エンジンのシード初期化や、暗号化といった用途に使用
@@ -162,7 +165,7 @@ void Minigame1::CreateNewTile() {
     }
 
     std::uniform_int_distribution<> dist(0, emptyCells.size() - 1);
-    int randomIndex = dist(engine);             //staticなengineを使う
+    int randomIndex = dist(rand);             //staticなengineを使う
     int row = emptyCells[randomIndex].first;
     int col = emptyCells[randomIndex].second;
     /*
@@ -176,7 +179,7 @@ void Minigame1::CreateNewTile() {
 
     //2か4をランダムに生成 (2が90%, 4が10%)
     std::uniform_int_distribution<> valDist(1, 10);         //1から10のあいだで整数をランダムに生成
-    board[row][col] = (valDist(engine) <= 9) ? 2 : 4;       //生成した値が9以下なら2を、そうでないなら4を代入
+    board[row][col] = (valDist(rand) <= 9) ? 2 : 4;       //生成した値が9以下なら2を、そうでないなら4を代入
     /*
     三項演算子
     →条件演算子 ? x : y ;
