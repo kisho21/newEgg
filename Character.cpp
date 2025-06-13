@@ -13,6 +13,9 @@
 Character* Character::inst = nullptr;
 
 Character::Character(void) :growthRate(0), gameMoney(1000), requestCount(0)/*,requestFlg(false)*/ {
+
+	//playImgae = eatImage = toiletImage = bathImage = touchImage = -1;
+
 	requestFlg = false;
 	playFlg = eatFlg = toiletFlg = bathFlg = touchFlg = false;
 }
@@ -31,18 +34,33 @@ Character* Character::getInst() {
 
 bool Character::SystemInit(void) {
 
-	int chara = LoadDivGraph("image/chara-128.png", MAX_CHARA, ANIM_NUM_CHARA, 1, CHARA_WID, CHARA_HIG, charaImage);
+	int chara = LoadDivGraph("image/chara-128.png", MAX_ANIM, ANIM_NUM_CHARA, 1, CHARA_WID, CHARA_HIG, charaImage);
 	if (chara == -1) return false;
+	int bubble = LoadDivGraph("image/bubble.png", MAX_ANIM, ANIM_NUM_BUBBLE, 1, BUBBLE_SIZE, BUBBLE_SIZE, bubbleImage);
+	if (bubble == -1) return false;
+
+	playImage = LoadGraph("image/wantPlay.png");
+	if (playImage == -1) return false;
+	eatImage = LoadGraph("image/wantEat.png");
+	if (eatImage == -1) return false;
+	toiletImage = LoadGraph("image/wantToilet.png");
+	if (toiletImage == -1) return false;
+	bathImage = LoadGraph("image/wantBath.png");
+	if (bathImage == -1) return false;
+	touchImage = LoadGraph("image/wantTouch.png");
+	if (touchImage == -1) return false;
 
 	return true;
 }
 
 void Character::GameInit(void) {
 
+	wantPosX = 169;
+	wantPosY = 129;
 	charaX = Application::WINDOW_SIZE_WID / 2 - CHARA_WID / 2;
 	charaY = 240;
-	charaFrame = 0;
-	charaFrameAdjust = 0;
+	frame = 0;
+	frameAdjust = 0;
 }
 
 void Character::Update(void) {
@@ -53,25 +71,33 @@ void Character::Update(void) {
 
 void Character::Draw(void) {
 
-	DrawGraph(charaX, charaY, charaImage[charaFrame], true);
+	DrawGraph(charaX, charaY, charaImage[frame], true);
+	DrawGraph(130, 100, bubbleImage[frame], true);
+
 	if(requestFlg) DrawRequest();
 }
 
 bool Character::Release(void) {
+
+	if (DeleteGraph(playImage) == -1) return false;
+	if (DeleteGraph(eatImage) == -1) return false;
+	if (DeleteGraph(toiletImage) == -1) return false;
+	if (DeleteGraph(bathImage) == -1) return false;
+	if (DeleteGraph(touchImage) == -1) return false;
 
 	return true;
 }
 
 void Character::Animation(void) {
 
-	if (charaFrameAdjust == 60) {
-		charaFrame++;
-		charaFrameAdjust = 0;
+	if (frameAdjust == 60) {
+		frame++;
+		frameAdjust = 0;
 	}
-	if (charaFrame == MAX_CHARA) {
-		charaFrame = 0;
+	if (frame == MAX_ANIM) {
+		frame = 0;
 	}
-	charaFrameAdjust++;
+	frameAdjust++;
 }
 
 //ê¨í∑ìxÇê›íË
@@ -221,22 +247,32 @@ void Character::DrawRequest(void) {
 		DrawString(0, 16, "normal", 0x000000);
 		break;
 	case play:
+		DrawGraph(wantPosX, wantPosY, playImage, true);
+
 		DrawString(0, 16, "play", 0x000000);
 		if (playFlg) DrawString(0, 32, "true", 0x000000);
 		break;
 	case eat:
+		DrawGraph(wantPosX, wantPosY, eatImage, true);
+
 		DrawString(0, 16, "eat", 0x000000);
 		if (eatFlg) DrawString(0, 32, "true", 0x000000);
 		break;
 	case toilet:
+		DrawGraph(wantPosX, wantPosY, toiletImage, true);
+
 		DrawString(0, 16, "toilet", 0x000000);
 		if (toiletFlg) DrawString(0, 32, "true", 0x000000);
 		break;
 	case bath:
+		DrawGraph(wantPosX, wantPosY, bathImage, true);
+
 		DrawString(0, 16, "bath", 0x000000);
 		if (bathFlg) DrawString(0, 32, "true", 0x000000);
 		break;
 	case touch:
+		DrawGraph(wantPosX, wantPosY, touchImage, true);
+
 		DrawString(0, 16, "touch", 0x000000);
 		if (touchFlg) DrawString(0, 32, "true", 0x000000);
 		break;

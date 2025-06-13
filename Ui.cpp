@@ -24,9 +24,6 @@ Ui::~Ui(void) {
 
 bool Ui::SystemInit(void) {
 
-	int bubble = LoadDivGraph("image/bubble.png", MAX_BUBBLE, ANIM_NUM_BUBBLE, 1, BUBBLE_SIZE, BUBBLE_SIZE, bubbleImage);
-	if (bubble == -1) return false;
-
 	upsideImage = LoadGraph("image/UpsideWindow.png");
 	if (upsideImage == -1) return false;
 	coinImage = LoadGraph("image/coin2.png");
@@ -87,8 +84,6 @@ void Ui::Update(void) {
 	nowMouseLeft = (GetMouseInput() & MOUSE_INPUT_LEFT);
 
 	GetMousePoint(&mouseX, &mouseY);		//マウスの座標を取得
-
-	BubbleAnim();
 	
 	//メニューの各種アイコンの処理
 	if (mouseX >= iconX && mouseX <= iconX + ICON_SIZE && mouseY >= iconY && mouseY <= iconY + ICON_SIZE) onMinigame = true;
@@ -111,8 +106,6 @@ void Ui::Draw(void) {
 	//DrawGraph(2, 3, upsideImage, true);
 	DrawGraph(Application::WINDOW_SIZE_WID / 2 + 2, 3, upsideImage, true);
 	DrawGraph(Application::WINDOW_SIZE_WID / 2 + 8, 7, coinImage, true);
-
-	DrawGraph(130, 100, bubbleImage[frame], true);
 
 	//メニューの描画
 	DrawGraph(menuX, menuY, menuImage, true);
@@ -156,16 +149,4 @@ bool Ui::Release(void) {
 	if (DeleteGraph(pushedDownImage) == -1) return false;
 
 	return true;
-}
-
-void Ui:: BubbleAnim(void) {
-
-	if (frameAdjust == 60) {
-		frame++;
-		frameAdjust = 0;
-	}
-	if (frame == MAX_BUBBLE) {
-		frame = 0;
-	}
-	frameAdjust++;
 }

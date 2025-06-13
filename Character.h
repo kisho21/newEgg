@@ -7,7 +7,11 @@ public:
 
 	//キャラクターのアニメーション
 	static constexpr int ANIM_NUM_CHARA = 2;
-	static constexpr int MAX_CHARA = ANIM_NUM_CHARA;
+	static constexpr int MAX_ANIM = ANIM_NUM_CHARA;
+
+	//吹き出しのアニメーション
+	static constexpr int BUBBLE_SIZE = 144;
+	static constexpr int ANIM_NUM_BUBBLE = 2;
 
 	//アニメーションインターバル
 	//static constexpr int ANIM_INTERVAL = 10;
@@ -71,7 +75,6 @@ private:
 		max
 	};
 	CharaWantTo wantTo = normal;
-	//CharaWantTo wantsNum;						//生成された乱数から要素を取得する変数
 
 	bool playFlg;
 	bool eatFlg;
@@ -79,10 +82,14 @@ private:
 	bool bathFlg;
 	bool touchFlg;
 
-	int charaImage[MAX_CHARA];
+	int playImage, eatImage, toiletImage, bathImage, touchImage;
+	int wantPosX, wantPosY;
+
+	int charaImage[MAX_ANIM];
 	int charaX, charaY;
-	int charaFrame;								//アニメーションの表示フレーム
-	int charaFrameAdjust;						//アニメーション表示の調整フレーム
+	int bubbleImage[MAX_ANIM];
+	int frame;								//アニメーションの表示フレーム
+	int frameAdjust;						//アニメーション表示の調整フレーム
 
 	static Character* inst;						//シングルトンインスタンスへのポインタ
 	Character(void);							//コンストラクタ

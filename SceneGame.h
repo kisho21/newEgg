@@ -30,7 +30,6 @@ private:
 		STATE_ITEM,							//アイテム一覧スライド
 		STATE_OPTION						//設定スライド
 	};
-
 	GameState nowGameState = STATE_PLAY;	//現在のゲームの状態、初期プレイ中
 
 	//各クラスのインスタンスのポインタの追加

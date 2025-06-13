@@ -14,7 +14,6 @@ SceneGame::SceneGame(void) {
 	growthImage = -1;
 	gameImage = -1;
 
-	//charaInst = nullptr;
 	uiInit = nullptr;
 }
 
@@ -30,12 +29,9 @@ bool SceneGame::SystemInit(void) {
 	gameImage = LoadGraph("image/game.png");
 	if (gameImage == -1) return false;
 
-	//charaInst = new Character();
-	//if (charaInst == nullptr) return false;
 	uiInit = new Ui();
 	if (uiInit == nullptr) return false;
 
-	//charaInst->SystemInit();
 	Character::getInst()->SystemInit();
 	uiInit->SystemInit();
 
@@ -74,7 +70,6 @@ void SceneGame::Update(void) {
 	//ó‘Ô‚²‚Æ‚ÌXVˆ—
 	switch (nowGameState) {
 	case STATE_PLAY:
-		//charaInst->Update();
 		Character::getInst()->Update();
 		uiInit->Update();
 
