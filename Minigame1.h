@@ -16,7 +16,7 @@ public:
 	//タイルのサイズ（描画用）
 	static constexpr int TILE_SIZE = 64;
 	//グリッドの描画開始位置（左上）
-	static constexpr int GRID_START_X = 9;
+	static constexpr int GRID_START_X = 12;
 	static constexpr int GRID_START_Y = 140;
 	//タイル間の隙間
 	static constexpr int TILE_GAP = 2;
