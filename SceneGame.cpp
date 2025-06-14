@@ -75,8 +75,11 @@ void SceneGame::Update(void) {
 	switch (nowGameState) {
 	case STATE_PLAY: {
 		Character::getInst()->Update();
+		//Character::getInst()->RequestCount();
 		uiInst->Update();
 
+		int x = Character::getInst()->GetCharaX();
+		int y = Character::getInst()->GetCharaY();
 		int wantTo = Character::getInst()->GetWnatTo();
 		if (wantTo == Character::play) {
 			nowWant = static_cast<CharaWant>(0);
@@ -91,6 +94,10 @@ void SceneGame::Update(void) {
 			nowWant = static_cast<CharaWant>(3);
 		}
 		else if (wantTo == Character::touch) {
+			if (mouseX > x + 30 && mouseX < x + 98 && mouseY > y + 10 && mouseY < y + 120 && prevMouseLeft == 1 && nowMouseLeft == 0) {
+				Character::getInst()->CharaTouth();
+			}
+
 			nowWant = static_cast<CharaWant>(4);
 		}
 
@@ -130,7 +137,6 @@ void SceneGame::Update(void) {
 		//nextScene_ID = E_SCENE_TITLE;
 		Character::getInst()->AddMoney(1000);
 	}
-	Character::getInst()->RequestCount();
 }
 
 void SceneGame::Draw(void) {
@@ -177,6 +183,8 @@ void SceneGame::Draw(void) {
 
 	int r = Character::getInst()->GetRequest();
 	DrawFormatString(0, 0, 0x000000, "%d", r);
+	int g = Character::getInst()->GetGrowth();
+	DrawFormatString(0, 48, 0x000000, "ê¨í∑ìxÅF%d", g);
 }
 
 bool SceneGame::Release(void) {

@@ -13,11 +13,11 @@ Text::Text() {
 
 void Text::TextInit() {
 
-	charaWantText[CharaWant::play] = "あそびたいみたいだよ";
-	charaWantText[CharaWant::eat] = "おなかがすいたみたいだよ";
-	charaWantText[CharaWant::toilet] = "トイレにいきたいみたいだよ";
-	charaWantText[CharaWant::bath] = "おふろにはいりたいみたいだよ";
-	charaWantText[CharaWant::touch] = "なでてほしいみたいだよ";
+	charaWantText[CharaWant::play] = "あそびたいみたいだよ！";
+	charaWantText[CharaWant::eat] = "おなかがすいたみたいだよ！";
+	charaWantText[CharaWant::toilet] = "トイレにいきたいみたいだよ！";
+	charaWantText[CharaWant::bath] = "おふろにはいりたいみたいだよ！";
+	charaWantText[CharaWant::touch] = "なでてほしいみたいだよ！";
 	charaWantText[CharaWant::none] = "";//未設置時のデフォルト
 }
 

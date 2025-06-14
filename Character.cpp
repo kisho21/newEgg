@@ -66,7 +66,7 @@ void Character::GameInit(void) {
 void Character::Update(void) {
 
 	Animation();
-	Request();
+	RequestCount();
 }
 
 void Character::Draw(void) {
@@ -174,7 +174,7 @@ void Character::RequestCount(void) {
 	}
 	else {
 		//リクエストフラグが立つと、ランダムで要求提示
-		
+		Request();
 		//else wantTo = normal;
 
 		/*
@@ -201,13 +201,15 @@ void Character::Request(void) {
 		}
 		break;
 	case play:
+		playFlg = true;
 		CharaPlay();
 
 		//要求解消時
 		//requestFlg = false;
-		requestCount = 0;
+		//requestCount = 0;
 		break;
 	case eat:
+		eatFlg = true;
 		CharaEat();
 
 
@@ -216,6 +218,7 @@ void Character::Request(void) {
 		requestCount = 0;
 		break;
 	case toilet:
+		toiletFlg = true;
 		CharaToilet();
 
 		//要求解消時
@@ -223,6 +226,7 @@ void Character::Request(void) {
 		requestCount = 0;
 		break;
 	case bath:
+		bathFlg = true;
 		CharaBath();
 
 		//要求解消時
@@ -230,7 +234,8 @@ void Character::Request(void) {
 		requestCount = 0;
 		break;
 	case touch:
-		CharaTouth();
+		touchFlg = true;
+		//CharaTouth();
 
 		//要求解消時
 		//requestFlg = false;
@@ -283,7 +288,7 @@ void Character::DrawRequest(void) {
 void Character::CharaPlay(void) {
 	//要求提示時の挙動
 	//要求解消時の数値の変化、成長度の加算
-	playFlg = true;
+	
 	/*
 	playFlg = true;  初期はfalse
 	if(!playFlg) {		SceneGameからセッターでfalseに
@@ -298,21 +303,25 @@ void Character::CharaPlay(void) {
 
 //
 void Character::CharaEat(void) {
-	eatFlg = true;
+	
 }
 
 //
 void Character::CharaToilet(void) {
-	toiletFlg = true;
+	
 }
 
 //
 void Character::CharaBath(void) {
-	bathFlg = true;
+	
 }
 
 //
 void Character::CharaTouth(void) {
-	touchFlg = true;
 
+	this->AddGrowth(5);
+	requestFlg = false;
+	requestCount = 0;
+	wantTo = normal;
+	touchFlg = false;
 }

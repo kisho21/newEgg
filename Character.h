@@ -27,6 +27,12 @@ public:
 	void Draw(void);
 	bool Release(void);
 
+	void CharaPlay(void);
+	void CharaEat(void);
+	void CharaToilet(void);
+	void CharaBath(void);
+	void CharaTouth(void);
+
 	enum CharaWantTo {
 		normal,
 		play,
@@ -53,12 +59,16 @@ public:
 	void AddRequest(int amount);					//要求カウントを増加させる
 	void SetRequestFlgF(void) { requestFlg = false; }
 	void RequestCount(void);
-	/*
-	カウントは常に加算し続ける
-	一定に達したら何かしらの要求を提示
-	要求提示中はカウントしない
-	要求を解消したらカウントを0に初期化し再度加算を始める
-	*/
+
+	int GetCharaX(void) { return charaX; }
+	int GetCharaY(void) { return charaY; }
+
+	bool GetPlayFlg(void) { return playFlg; }
+	bool GetEatFlg(void) { return eatFlg; }
+	bool GetToiletFlg(void) { return toiletFlg; }
+	bool GetBathFlg(void) { return bathFlg; }
+	bool GetTouchFlg(void) { return touchFlg; }
+
 	int GetWantPosX(void) { return wantPosX; }
 	int GetWantPosY(void) { return wantPosY; }
 	CharaWantTo GetWnatTo(void) { return wantTo; }
@@ -83,8 +93,8 @@ private:
 	int charaImage[MAX_ANIM];
 	int charaX, charaY;
 	int bubbleImage[MAX_ANIM];
-	int frame;								//アニメーションの表示フレーム
-	int frameAdjust;						//アニメーション表示の調整フレーム
+	int frame;									//アニメーションの表示フレーム
+	int frameAdjust;							//アニメーション表示の調整フレーム
 
 	static Character* inst;						//シングルトンインスタンスへのポインタ
 	Character(void);							//コンストラクタ
@@ -100,13 +110,6 @@ private:
 	Character& operator=(const Character&) = delete;
 
 	void Animation(void);
-
 	void Request(void);
 	void DrawRequest(void);
-
-	void CharaPlay(void);
-	void CharaEat(void);
-	void CharaToilet(void);
-	void CharaBath(void);
-	void CharaTouth(void);
 };
