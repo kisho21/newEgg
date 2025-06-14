@@ -14,8 +14,8 @@ Character* Character::inst = nullptr;
 
 Character::Character(void) :growthRate(0), gameMoney(1000), requestCount(0)/*,requestFlg(false)*/ {
 
-	//playImgae = eatImage = toiletImage = bathImage = touchImage = -1;
-
+	playImage = eatImage = toiletImage = bathImage = touchImage = -1;
+	wantTo = normal;
 	requestFlg = false;
 	playFlg = eatFlg = toiletFlg = bathFlg = touchFlg = false;
 }

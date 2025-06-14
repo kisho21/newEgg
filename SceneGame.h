@@ -1,9 +1,11 @@
 #pragma once
 
 #include "StDefine.h"
+#include "Text.h"
 
 class Character;
 class Ui;
+class Text;
 
 class SceneGame {
 public:
@@ -34,7 +36,8 @@ private:
 
 	//各クラスのインスタンスのポインタの追加
 	//Character* charaInst;
-	Ui* uiInit;
+	Ui* uiInst;
+	Text* tInst;
 
 	int growthImage;						//成長ゲージ画像、仮置き段階
 	int gameImage;							//ゲーム画面の背景画像
@@ -43,6 +46,8 @@ private:
 
 	//int growthPoint;						//成長ポイント
 	//int growthX;							//成長ゲージの長さ、X座標を変えることで表す
+
+	CharaWant nowWant;	//現在の要望
 
 	int mouseX, mouseY;						//マウス座標
 	int prevMouseLeft, nowMouseLeft;		//マウスの入力状態を格納する変数

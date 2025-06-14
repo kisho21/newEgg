@@ -72,7 +72,7 @@ void Minigame1::Update(void) {
     if (prev0Key == 1 && now0Key == 0) {
         Character::getInst()->AddMoney(5);
     }
-    Character::getInst()->RequestCount();
+    //Character::getInst()->RequestCount();
 }
 
 void Minigame1::Draw(void) {

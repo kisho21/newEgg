@@ -27,6 +27,17 @@ public:
 	void Draw(void);
 	bool Release(void);
 
+	enum CharaWantTo {
+		normal,
+		play,
+		eat,
+		toilet,
+		bath,
+		touch,
+
+		max
+	};
+
 	//ゲッターセッター関数
 	//成長度関係
 	int GetGrowth() const { return growthRate; }	//成長度を取得、const：値を変更しない
@@ -41,22 +52,16 @@ public:
 	void SetRequest(int request);					//要求カウントを設定
 	void AddRequest(int amount);					//要求カウントを増加させる
 	void SetRequestFlgF(void) { requestFlg = false; }
+	void RequestCount(void);
 	/*
 	カウントは常に加算し続ける
 	一定に達したら何かしらの要求を提示
 	要求提示中はカウントしない
 	要求を解消したらカウントを0に初期化し再度加算を始める
 	*/
-
-	void RequestCount(void);
-	void Request(void);
-	void DrawRequest(void);
-
-	void CharaPlay(void);
-	void CharaEat(void);
-	void CharaToilet(void);
-	void CharaBath(void);
-	void CharaTouth(void);
+	int GetWantPosX(void) { return wantPosX; }
+	int GetWantPosY(void) { return wantPosY; }
+	CharaWantTo GetWnatTo(void) { return wantTo; }
 
 private:
 	int growthRate;
@@ -64,17 +69,7 @@ private:
 	int requestCount;
 	bool requestFlg;
 
-	enum CharaWantTo {
-		normal,
-		play,
-		eat,
-		toilet,
-		bath,
-		touch,
-
-		max
-	};
-	CharaWantTo wantTo = normal;
+	CharaWantTo wantTo;
 
 	bool playFlg;
 	bool eatFlg;
@@ -105,4 +100,13 @@ private:
 	Character& operator=(const Character&) = delete;
 
 	void Animation(void);
+
+	void Request(void);
+	void DrawRequest(void);
+
+	void CharaPlay(void);
+	void CharaEat(void);
+	void CharaToilet(void);
+	void CharaBath(void);
+	void CharaTouth(void);
 };
