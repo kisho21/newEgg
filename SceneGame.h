@@ -39,8 +39,10 @@ private:
 	Ui* uiInst;
 	Text* tInst;
 
-	int growthImage;						//成長ゲージ画像、仮置き段階
 	int gameImage;							//ゲーム画面の背景画像
+	int textWindow;
+	int growthImage;						//成長ゲージ画像、仮置き段階
+	int growthX;							//成長ゲージのX座標
 
 	char moneyText[32];						//所持金を表示させるのに十分なバッファ
 

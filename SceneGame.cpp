@@ -14,6 +14,7 @@ SceneGame::SceneGame(void) : nowWant(CharaWant::none) {
 
 	growthImage = -1;
 	gameImage = -1;
+	textWindow = -1;
 
 	uiInst = nullptr;
 	tInst = nullptr;
@@ -30,6 +31,8 @@ bool SceneGame::SystemInit(void) {
 	if (growthImage == -1) return false;
 	gameImage = LoadGraph("image/game.png");
 	if (gameImage == -1) return false;
+	textWindow = LoadGraph("image/textWindow.png");
+	if (textWindow == -1) return false;
 
 	uiInst = new Ui();
 	if (uiInst == nullptr) return false;
@@ -51,9 +54,10 @@ void SceneGame::GameInit(void) {
 	//次のシーンの初期設定
 	nextScene_ID = E_SCENE_GAME;
 
-	//charaInst->GameInit();
 	Character::getInst()->GameInit();
 	uiInst->GameInit();
+
+	growthX = Character::getInst()->GetGrowth();
 
 	prevMouseLeft = nowMouseLeft = 0;
 	prevSpaceKey = nowSpaceKey = 0;
@@ -75,22 +79,39 @@ void SceneGame::Update(void) {
 	switch (nowGameState) {
 	case STATE_PLAY: {
 		Character::getInst()->Update();
-		//Character::getInst()->RequestCount();
 		uiInst->Update();
+
+		growthX = Character::getInst()->GetGrowth();
 
 		int x = Character::getInst()->GetCharaX();
 		int y = Character::getInst()->GetCharaY();
 		int wantTo = Character::getInst()->GetWnatTo();
+		int wantx = Character::getInst()->GetWantPosX();
+		int wanty = Character::getInst()->GetWantPosY();
 		if (wantTo == Character::play) {
+
+
 			nowWant = static_cast<CharaWant>(0);
 		}
 		else if (wantTo == Character::eat) {
+
+
 			nowWant = static_cast<CharaWant>(1);
 		}
 		else if (wantTo == Character::toilet) {
+			if (mouseX > wantx + 30 && mouseX < wantx + 64 && mouseY > wanty && mouseY < wanty + 64 && prevMouseLeft == 1 && nowMouseLeft == 0) {
+				Character::getInst()->SetIdleF();
+				Character::getInst()->SetWalkT();
+			}
+
 			nowWant = static_cast<CharaWant>(2);
 		}
 		else if (wantTo == Character::bath) {
+			if (mouseX > wantx + 30 && mouseX < wantx + 64 && mouseY > wanty && mouseY < wanty + 64 && prevMouseLeft == 1 && nowMouseLeft == 0) {
+				Character::getInst()->SetIdleF();
+				Character::getInst()->SetWalkT();
+			}
+
 			nowWant = static_cast<CharaWant>(3);
 		}
 		else if (wantTo == Character::touch) {
@@ -99,6 +120,9 @@ void SceneGame::Update(void) {
 			}
 
 			nowWant = static_cast<CharaWant>(4);
+		}
+		else if (wantTo == Character::normal) {
+			nowWant = static_cast<CharaWant>(5);
 		}
 
 		break;
@@ -143,7 +167,7 @@ void SceneGame::Draw(void) {
 
 	SetDrawBright(255, 255, 255);
 
-	DrawGraph(7, 48, growthImage, true);				//成長ゲージ仮置き、ゲージを可変にする
+	DrawGraph(growthX, 48, growthImage, true);				//成長ゲージ仮置き、ゲージを可変にする
 	DrawGraph(0, 0, gameImage, true);
 
 	Character::getInst()->Draw();
@@ -156,8 +180,10 @@ void SceneGame::Draw(void) {
 		int x = Character::getInst()->GetWantPosX();
 		int y = Character::getInst()->GetWantPosY();
 		if (mouseX > x && mouseX < x + 64 && mouseY > y && mouseY < y + 64) {
+			bool rFlg = Character::getInst()->GetRequestFlg();
+			if (rFlg) DrawGraph(10, 370, textWindow, true);
 			const std::string& displayText = tInst->GetCharacterWantString(nowWant);
-			DrawString(10, 10, displayText.c_str(), 0x000000);
+			DrawString(16, 378, displayText.c_str(), 0x000000);
 		}
 
 		break;

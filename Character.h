@@ -27,6 +27,8 @@ public:
 	void Draw(void);
 	bool Release(void);
 
+	void WalkProc(void);
+
 	void CharaPlay(void);		//各要求解消時の処理
 	void CharaEat(void);		//↓
 	void CharaToilet(void);		//↓
@@ -59,9 +61,14 @@ public:
 	void AddRequest(int amount);					//要求カウントを増加させる
 	void SetRequestFlgF(void) { requestFlg = false; }
 	void RequestCount(void);
+	bool GetRequestFlg(void) { return requestFlg; }
 
 	int GetCharaX(void) { return charaX; }
 	int GetCharaY(void) { return charaY; }
+	void SetIdleT(void) { idleFlg = true; }
+	void SetIdleF(void) { idleFlg = false; }
+	void SetWalkT(void) { walkFlg = true; }
+	void SetWalkF(void) { walkFlg = false; }
 
 	bool GetPlayFlg(void) { return playFlg; }
 	bool GetEatFlg(void) { return eatFlg; }
@@ -91,10 +98,17 @@ private:
 	int wantPosX, wantPosY;
 
 	int charaImage[MAX_ANIM];
+	int cWalkImage[MAX_ANIM];
+	int cBackImage[MAX_ANIM];
 	int charaX, charaY;
 	int bubbleImage[MAX_ANIM];
 	int frame;									//アニメーションの表示フレーム
 	int frameAdjust;							//アニメーション表示の調整フレーム
+
+	bool idleFlg;
+	bool walkFlg;
+	bool backFlg;
+	int bathTime;
 
 	static Character* inst;						//シングルトンインスタンスへのポインタ
 	Character(void);							//コンストラクタ

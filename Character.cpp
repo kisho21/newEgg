@@ -12,12 +12,14 @@
 //シングルトンインスタンスの初期化
 Character* Character::inst = nullptr;
 
-Character::Character(void) :growthRate(0), gameMoney(1000), requestCount(0)/*,requestFlg(false)*/ {
+Character::Character(void) :growthRate(-267), gameMoney(1000), requestCount(0)/*,requestFlg(false)*/ {
 
 	playImage = eatImage = toiletImage = bathImage = touchImage = -1;
 	wantTo = normal;
 	requestFlg = false;
 	playFlg = eatFlg = toiletFlg = bathFlg = touchFlg = false;
+	idleFlg = true;
+	walkFlg = backFlg = false;
 }
 
 Character::~Character(void) {
@@ -36,6 +38,10 @@ bool Character::SystemInit(void) {
 
 	int chara = LoadDivGraph("image/chara-128.png", MAX_ANIM, ANIM_NUM_CHARA, 1, CHARA_WID, CHARA_HIG, charaImage);
 	if (chara == -1) return false;
+	int cWalk = LoadDivGraph("image/chara-walk.png", MAX_ANIM, ANIM_NUM_CHARA, 1, CHARA_WID, CHARA_HIG, cWalkImage);
+	if (cWalk == -1) return false;
+	int cBack = LoadDivGraph("image/chara-back.png", MAX_ANIM, ANIM_NUM_CHARA, 1, CHARA_WID, CHARA_HIG, cBackImage);
+	if (cBack == -1) return false;
 	int bubble = LoadDivGraph("image/bubble.png", MAX_ANIM, ANIM_NUM_BUBBLE, 1, BUBBLE_SIZE, BUBBLE_SIZE, bubbleImage);
 	if (bubble == -1) return false;
 
@@ -61,20 +67,26 @@ void Character::GameInit(void) {
 	charaY = 240;
 	frame = 0;
 	frameAdjust = 0;
+	bathTime = 0;
 }
 
 void Character::Update(void) {
 
+	WalkProc();
 	Animation();
 	RequestCount();
 }
 
 void Character::Draw(void) {
 
-	DrawGraph(charaX, charaY, charaImage[frame], true);
-	DrawGraph(130, 100, bubbleImage[frame], true);
+	if(idleFlg) DrawGraph(charaX, charaY, charaImage[frame], true);
+	if (walkFlg) DrawGraph(charaX, charaY, cWalkImage[frame], true);
+	if (backFlg) DrawGraph(charaX, charaY, cBackImage[frame], true);
 
-	if(requestFlg) DrawRequest();
+	if (requestFlg) {
+		DrawGraph(130, 100, bubbleImage[frame], true);
+		DrawRequest();
+	}
 }
 
 bool Character::Release(void) {
@@ -86,6 +98,29 @@ bool Character::Release(void) {
 	if (DeleteGraph(touchImage) == -1) return false;
 
 	return true;
+}
+
+void Character::WalkProc(void) {
+
+	if (walkFlg) {
+		charaX--;
+		bathTime = 0;
+		if (charaX < -128) {
+			walkFlg = false;
+			backFlg = true;
+		}
+	}
+	else if (backFlg) {
+		bathTime++;
+		if (bathTime > 500) {
+			charaX++;
+		}
+		if (charaX >= Application::WINDOW_SIZE_WID / 2 - CHARA_WID / 2) {
+			backFlg = false;
+			idleFlg = true;
+			CharaBath();
+		}
+	}
 }
 
 void Character::Animation(void) {
@@ -103,8 +138,8 @@ void Character::Animation(void) {
 //成長度を設定
 void Character::SetGrowth(int growth) {
 
-	if (growth >= 0) growthRate = growth;	//最小値のチェック
-	else growthRate = 0;					//最小値に設定
+	if (growth >= -267) growthRate = growth;	//最小値のチェック
+	else growthRate = -267;						//最小値に設定
 }
 
 //成長度を増加させる
@@ -159,7 +194,7 @@ void Character::RequestCount(void) {
 	if (!requestFlg) {
 		requestAmount++;
 		this->AddRequest(requestAmount);
-		if (requestCount >= 100) {
+		if (requestCount >= 200) {
 			std::uniform_int_distribution<> number(0, wants.size() - 1);		//std::uniform_int_distribution<> x(min, max)：指定された範囲で整数を均一な確率で生成
 			CharaWantTo wantsNum = wants[number(randWants)];					//生成された乱数から要素を取得
 			if (wantsNum == 0) wantTo = play;
@@ -167,8 +202,10 @@ void Character::RequestCount(void) {
 			else if (wantsNum == 2) wantTo = toilet;
 			else if (wantsNum == 3) wantTo = bath;
 			else if (wantsNum == 4) wantTo = touch;
+			else if (wantsNum == 5) wantTo = normal;
 
-			requestFlg = true;
+			if (wantsNum >= 0 && wantsNum <= 4) requestFlg = true;
+			else requestFlg = false;
 			requestCount = 0;
 		}
 	}
@@ -268,7 +305,7 @@ void Character::DrawRequest(void) {
 	}
 }
 
-//
+//遊びたいを解消
 void Character::CharaPlay(void) {
 	//要求提示時の挙動
 	//要求解消時の数値の変化、成長度の加算
@@ -281,7 +318,7 @@ void Character::CharaPlay(void) {
 	//解消するためのプレイヤーの操作はSceneGameに書く
 }
 
-//
+//おなかすいたを解消
 void Character::CharaEat(void) {
 	
 	this->AddGrowth(5);
@@ -291,7 +328,7 @@ void Character::CharaEat(void) {
 	eatFlg = false;
 }
 
-//
+//トイレ行きたいを解消
 void Character::CharaToilet(void) {
 	
 	this->AddGrowth(5);
@@ -301,7 +338,7 @@ void Character::CharaToilet(void) {
 	toiletFlg = false;
 }
 
-//
+//お風呂入りたいを解消
 void Character::CharaBath(void) {
 	
 	this->AddGrowth(5);
@@ -311,7 +348,7 @@ void Character::CharaBath(void) {
 	bathFlg = false;
 }
 
-//
+//なでてほしいを解消
 void Character::CharaTouth(void) {
 
 	this->AddGrowth(5);
