@@ -1,8 +1,7 @@
 #pragma once
-#include <vector> // ゲームボードにstd::vectorを使う場合
-#include <random> // 乱数生成
-//#include <algorithm> // std::shuffleなど（必要に応じて）
-#include <map>//キーと値のペアを格納する連想コンテナ、タイルの値と色を対応させる
+#include <vector>	//ゲームボードにstd::vectorを使う場合
+#include <random>	//乱数生成
+#include <map>		//キーと値のペアを格納する連想コンテナ、タイルの値と色を対応させる
 
 #include "StDefine.h"
 
@@ -51,6 +50,8 @@ private:
 
 	int gameImage;						//ミニゲーム背景画像
 	int arrowImage;						//矢印画像
+	int continueImage;					//コンティニューボタン画像
+	int quitImage;						//終了ボタン
 
 	int arrowX, arrowY;					//矢印の座標
 

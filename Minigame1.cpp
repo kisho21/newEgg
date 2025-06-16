@@ -14,6 +14,8 @@ Minigame1::Minigame1(void) {
 
     gameImage = -1;
     arrowImage = -1;
+    continueImage = -1;
+    quitImage = -1;
 
     InitializeGame();       //ゲームの初期化
     SetupTileColors();      //タイルの色設定
@@ -29,6 +31,10 @@ bool Minigame1::SystemInit(void) {
     if (gameImage == -1) return false;
     arrowImage = LoadGraph("image/arrow.png");
     if (arrowImage == -1) return false;
+    continueImage = LoadGraph("image/button-continue.png");
+    if (continueImage == -1) return false;
+    quitImage = LoadGraph("image/button-quit.png");
+    if (quitImage == -1) return false;
 
     //フォントハンドルの作成
     fontHandles[32] = CreateFontToHandle("メイリオ", 32, -1, DX_FONTTYPE_NORMAL);
@@ -274,16 +280,24 @@ void Minigame1::DrawGame() {
     //DrawFormatString(GRID_START_X + 80, GRID_START_Y + BOARD_SIZE * (TILE_SIZE + TILE_GAP) + TILE_GAP, 0x000000, "%lld", score);
     DrawFormatString(30, 440, 0x000000, "score:%lld", score);
 
-    //ゲームオーバー/クリアメッセージ
-    if (nowGameState == GAME_OVER) {
-        SetFontSize(32);        //フォントサイズを変更
-        DrawString(0, 0,"GAME OVER!", GetColor(255, 0, 0));
-        SetFontSize(16);        //元に戻す
-    }
-    else if (nowGameState == GAME_CLEAR) {
-        SetFontSize(32);
-        DrawString(0, 0,"YOU WIN!", GetColor(0, 255, 0));
-        SetFontSize(16);
+    SetDrawBright(255, 255, 255);
+    if (nowGameState != PLAYING) {
+        DrawGraph(15, 370, continueImage, true);
+        DrawGraph(153, 370, quitImage, true);
+
+        //ゲームオーバー/クリアメッセージ
+        if (nowGameState == GAME_OVER) {
+            SetFontSize(32);        //フォントサイズを変更
+            DrawString(64, 200, "GAME OVER!", GetColor(255, 0, 0));
+            SetFontSize(16);        //元に戻す
+        }
+        else if (nowGameState == GAME_CLEAR) {
+            SetFontSize(32);
+            DrawString(80, 200, "YOU WIN!", GetColor(0, 255, 0));
+            SetFontSize(16);
+        }
+
+        SetDrawBright(100, 100, 100);
     }
 }
 
@@ -329,8 +343,14 @@ void Minigame1::UpdateGame() {
 
     if (nowGameState != PLAYING) {
         //ゲームオーバー、クリアの場合はRキーでリスタートできるようにする
-        if (CheckHitKey(KEY_INPUT_R)) {
+        /*if (CheckHitKey(KEY_INPUT_R)) {
             InitializeGame();
+        }*/
+        if (mouseX >= 15 && mouseX <= 135 && mouseY >= 370 && mouseY <= 410 && prevMouseLeft == 1 && nowMouseLeft == 0) {
+            InitializeGame();
+        }
+        if (mouseX >= 153 && mouseX <= 273 && mouseY >= 370 && mouseY <= 410 && prevMouseLeft == 1 && nowMouseLeft == 0) {
+            nextScene_ID = E_SCENE_GAME;
         }
 
         if(addmoney) GameOver();

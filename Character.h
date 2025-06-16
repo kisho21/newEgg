@@ -27,11 +27,11 @@ public:
 	void Draw(void);
 	bool Release(void);
 
-	void CharaPlay(void);
-	void CharaEat(void);
-	void CharaToilet(void);
-	void CharaBath(void);
-	void CharaTouth(void);
+	void CharaPlay(void);		//Še—v‹‰ğÁ‚Ìˆ—
+	void CharaEat(void);		//«
+	void CharaToilet(void);		//«
+	void CharaBath(void);		//«
+	void CharaTouth(void);		//«
 
 	enum CharaWantTo {
 		normal,

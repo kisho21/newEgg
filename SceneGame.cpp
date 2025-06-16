@@ -141,6 +141,8 @@ void SceneGame::Update(void) {
 
 void SceneGame::Draw(void) {
 
+	SetDrawBright(255, 255, 255);
+
 	DrawGraph(7, 48, growthImage, true);				//成長ゲージ仮置き、ゲージを可変にする
 	DrawGraph(0, 0, gameImage, true);
 
