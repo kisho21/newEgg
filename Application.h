@@ -1,6 +1,10 @@
 #pragma once
+#include <string>
 
 class SceneManager;
+
+const std::string INFINITE_MONEY_NAME = "‚ä‚©";
+const int INFINITE_MONEY_AMOUNT = 99999999;
 
 class Application {
 

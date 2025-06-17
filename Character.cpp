@@ -20,6 +20,8 @@ Character::Character(void) :growthRate(-267), gameMoney(1000), requestCount(0), 
 	playFlg = eatFlg = toiletFlg = bathFlg = touchFlg = false;
 	idleFlg = true;
 	walkFlg = backFlg = false;
+	infiniteMoneyMode = false;
+	charaName = "";
 }
 
 Character::~Character(void) {
@@ -137,6 +139,15 @@ void Character::Animation(void) {
 	frameAdjust++;
 }
 
+//キャラクターの名前を設定する関数の定義
+void Character::SetCharacterName(const std::string& name) {
+	charaName = name;
+}
+
+const std::string& Character::GetCharacterName() const {
+	return charaName;
+}
+
 //成長度を設定
 void Character::SetGrowth(int growth) {
 
@@ -164,15 +175,25 @@ void Character::GrownMax(void) {
 //所持金を設定
 void Character::SetMoney(int money) {
 
-	gameMoney = money;
-	if (gameMoney < 0) { gameMoney = 0; }
+	if (infiniteMoneyMode) {
+		gameMoney = INFINITE_MONEY_AMOUNT;
+	}
+	else {
+		gameMoney = money;
+		if (gameMoney < 0) { gameMoney = 0; }
+	}
 }
 
 //所持金を増加させる
 void Character::AddMoney(int amount) {
 
-	gameMoney += amount;
-	if (gameMoney < 0) gameMoney = 0;
+	if (infiniteMoneyMode) {
+		gameMoney = INFINITE_MONEY_AMOUNT;
+	}
+	else {
+		gameMoney += amount;
+		if (gameMoney < 0) gameMoney = 0;
+	}
 }
 
 //要求カウントを設定

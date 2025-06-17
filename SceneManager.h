@@ -3,6 +3,7 @@
 #include "StDefine.h"
 
 class SceneTitle;
+class SceneName;
 class SceneGame;
 class Fader;
 class Minigame1;
@@ -22,6 +23,7 @@ public:
 private:
 	//インスタンスのポインタを作成
 	SceneTitle* titleInst;
+	SceneName* nameInst;
 	SceneGame* gameInst;
 	Fader* fader;
 	Minigame1* mini1Inst;

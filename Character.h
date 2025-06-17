@@ -19,6 +19,10 @@ public:
 	//シングルトンインスタンスを取得する静的メソッド
 	static Character* getInst();
 
+	//キャラクター名に関係する関数
+	void SetCharacterName(const std::string& name);
+	const std::string& GetCharacterName() const;
+
 	~Character(void);
 
 	bool SystemInit(void);
@@ -81,6 +85,14 @@ public:
 	int GetWantPosY(void) { return wantPosY; }
 	CharaWantTo GetWnatTo(void) { return wantTo; }
 
+	//名前の取得
+	void SetCharaName(const std::string& name) { charaName = name; }
+	const std::string& GetCharaName() const { return charaName; }
+
+	//所持金無限
+	void SetInfiniteMoneyMode(bool enable) { infiniteMoneyMode = enable; }
+	bool IsInfiniteMoneyMode() const { return infiniteMoneyMode; }
+
 private:
 	int growthRate;
 	int gameMoney;
@@ -112,6 +124,9 @@ private:
 	bool walkFlg;
 	bool backFlg;
 	int bathTime;
+
+	std::string charaName;
+	bool infiniteMoneyMode;
 
 	static Character* inst;						//シングルトンインスタンスへのポインタ
 	Character(void);							//コンストラクタ

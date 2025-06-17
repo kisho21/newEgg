@@ -74,24 +74,24 @@ void SceneTitle::Update(void) {
 
 	if (checkStart == true) {
 		//StopSoundMem(titleBgm);
-		nextScene_ID = E_SCENE_GAME;
+		nextScene_ID = E_SCENE_NAME;
 	}
 
 	//デバッグ用
 	prev1Key = now1Key;
 	now1Key = CheckHitKey(KEY_INPUT_1);
 	if (prev1Key == 1 && now1Key == 0) {
-		nextScene_ID = E_SCENE_GAME;
+		nextScene_ID = E_SCENE_NAME;
 	}
 	prev2Key = now2Key;
 	now2Key = CheckHitKey(KEY_INPUT_2);
 	if (prev2Key == 1 && now2Key == 0) {
-		nextScene_ID = E_SCENE_MINIGAME_1;
+		nextScene_ID = E_SCENE_GAME;
 	}
 	prev3Key = now3Key;
 	now3Key = CheckHitKey(KEY_INPUT_3);
 	if (prev3Key == 1 && now3Key == 0) {
-		//nextScene_ID = E_SCENE_EVENT;
+		nextScene_ID = E_SCENE_MINIGAME_1;
 	}
 	/*
 	1:ゲーム

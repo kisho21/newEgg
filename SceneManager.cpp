@@ -6,6 +6,7 @@
 
 #include "SceneManager.h"
 #include "SceneTitle.h"
+#include "SceneName.h"
 #include "SceneGame.h"
 #include "Fader.h"
 #include "Minigame1.h"
@@ -14,6 +15,7 @@
 SceneManager::SceneManager(void) {
 
 	titleInst = nullptr;
+	nameInst = nullptr;
 	gameInst = nullptr;
 	fader = nullptr;
 	mini1Inst = nullptr;
@@ -68,6 +70,10 @@ void SceneManager::Update(void) {
 			titleInst->Update();
 			nextScene_ID = titleInst->GetNextSceneID();
 			break;
+		case E_SCENE_NAME:
+			nameInst->Update();
+			nextScene_ID = nameInst->GetNextSceneID();
+			break;
 		case E_SCENE_GAME:
 			gameInst->Update();
 			nextScene_ID = gameInst->GetNextSceneID();
@@ -97,6 +103,9 @@ void SceneManager::Draw(void) {
 	case E_SCENE_TITLE:
 		titleInst->Draw();
 		break;
+	case E_SCENE_NAME:
+		nameInst->Draw();
+		break;
 	case E_SCENE_GAME:
 		gameInst->Draw();
 		break;
@@ -115,6 +124,7 @@ bool SceneManager::Release(void) {
 
 	//インスタンスの解放
 	ReleaseScene(E_SCENE_TITLE);
+	ReleaseScene(E_SCENE_NAME);
 	ReleaseScene(E_SCENE_GAME);
 	ReleaseScene(E_SCENE_MINIGAME_1);
 	ReleaseScene(E_SCENE_MINIGAME_2);
@@ -140,6 +150,14 @@ bool SceneManager::ChangeScene(eScene_ID id) {
 			if (titleInst == nullptr) return false;
 			titleInst->SystemInit();
 			titleInst->GameInit();
+		}
+		break;
+	case E_SCENE_NAME:
+		if (nameInst == nullptr) {
+			nameInst = new SceneName();
+			if (nameInst == nullptr) return false;
+			nameInst->SystemInit();
+			nameInst->GameInit();
 		}
 		break;
 	case E_SCENE_GAME:
@@ -178,6 +196,13 @@ void SceneManager::ReleaseScene(eScene_ID id) {
 			titleInst->Release();
 			delete titleInst;
 			titleInst = nullptr;
+		}
+		break;
+	case E_SCENE_NAME:
+		if (nameInst != nullptr) {
+			nameInst->Release();
+			delete nameInst;
+			nameInst = nullptr;
 		}
 		break;
 	case E_SCENE_GAME:

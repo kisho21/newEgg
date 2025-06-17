@@ -144,6 +144,7 @@
     <ClCompile Include="Minigame2.cpp" />
     <ClCompile Include="SceneGame.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SceneName.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="Shop.cpp" />
     <ClCompile Include="Text.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Minigame2.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SceneName.h" />
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="Shop.h" />
     <ClInclude Include="StDefine.h" />

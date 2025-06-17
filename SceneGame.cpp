@@ -195,6 +195,13 @@ void SceneGame::Draw(void) {
 
 	DrawFontProc();
 
+	const std::string& charaName = Character::getInst()->GetCharacterName();
+	int nameX = 46;
+	int nameY = 16;
+	if (!charaName.empty()) {
+		DrawString(nameX, nameY, charaName.c_str(), 0x000000);
+	}
+
 	switch (nowGameState) {
 	case STATE_PLAY: {
 		int x = Character::getInst()->GetWantPosX();
