@@ -4,6 +4,8 @@
 #include "Text.h"
 
 class Character;
+class Shop;
+class Inventory;
 class Ui;
 class Text;
 
@@ -36,6 +38,8 @@ private:
 
 	//各クラスのインスタンスのポインタの追加
 	//Character* charaInst;
+	Shop* sInst;
+	Inventory* iInst;
 	Ui* uiInst;
 	Text* tInst;
 

@@ -151,8 +151,8 @@ void Character::AddGrowth(int amount) {
 //所持金を設定
 void Character::SetMoney(int money) {
 
-	if (money >= 0) gameMoney = money;
-	else gameMoney = 0;
+	gameMoney = money;
+	if (gameMoney < 0) { gameMoney = 0; }
 }
 
 //所持金を増加させる
@@ -197,15 +197,15 @@ void Character::RequestCount(void) {
 		if (requestCount >= 200) {
 			std::uniform_int_distribution<> number(0, wants.size() - 1);		//std::uniform_int_distribution<> x(min, max)：指定された範囲で整数を均一な確率で生成
 			CharaWantTo wantsNum = wants[number(randWants)];					//生成された乱数から要素を取得
-			if (wantsNum == 0) wantTo = play;
+			if (wantsNum == 0) wantTo = normal;
 			else if (wantsNum == 1) wantTo = eat;
 			else if (wantsNum == 2) wantTo = toilet;
 			else if (wantsNum == 3) wantTo = bath;
 			else if (wantsNum == 4) wantTo = touch;
-			else if (wantsNum == 5) wantTo = normal;
+			else if (wantsNum == 5) wantTo = play;
 
-			if (wantsNum >= 0 && wantsNum <= 4) requestFlg = true;
-			else requestFlg = false;
+			/*if (wantsNum >= 0 && wantsNum <= 4)*/ requestFlg = true;
+			/*else requestFlg = false;*/
 			requestCount = 0;
 		}
 	}

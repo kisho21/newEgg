@@ -21,10 +21,12 @@ private:
 	// ゲームの状態
 	enum GameState {
 		PLAYING,
-		GAME_OVER,
-		GAME_CLEAR
+		GAME_OVER
 	};
 	GameState nowGameState = PLAYING;
+
+	int mouseX, mouseY;
+	int prevMouseLeft, nowMouseLeft;	//マウスの入力状態を格納する変数
 
 	eScene_ID nextScene_ID;				//次に遷移するシーンID
 };

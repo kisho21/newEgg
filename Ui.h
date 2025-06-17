@@ -40,8 +40,8 @@ private:
 	int menuX, menuY;						//メニューの座標
 	int iconX, iconY;						//アイコンの座標
 
-	int frame;							//アニメーションの表示フレーム
-	int frameAdjust;					//アニメーション表示の調整フレーム
+	int frame;								//アニメーションの表示フレーム
+	int frameAdjust;						//アニメーション表示の調整フレーム
 
 	bool onMinigame, onShop, onBag, onSet, onDown;
 	bool checkDown;

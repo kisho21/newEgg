@@ -7,6 +7,8 @@
 #include "Application.h"
 #include "SceneGame.h"
 #include "Character.h"
+#include "Shop.h"
+#include "Inventory.h"
 #include "Ui.h"
 #include "Text.h"
 
@@ -16,6 +18,8 @@ SceneGame::SceneGame(void) : nowWant(CharaWant::none) {
 	gameImage = -1;
 	textWindow = -1;
 
+	sInst = nullptr;
+	iInst = nullptr;
 	uiInst = nullptr;
 	tInst = nullptr;
 }
@@ -34,6 +38,10 @@ bool SceneGame::SystemInit(void) {
 	textWindow = LoadGraph("image/textWindow.png");
 	if (textWindow == -1) return false;
 
+	sInst = new Shop();
+	if (sInst == nullptr) return false;
+	iInst = new Inventory();
+	if (iInst == nullptr) return false;
 	uiInst = new Ui();
 	if (uiInst == nullptr) return false;
 	tInst = new Text();
@@ -135,12 +143,14 @@ void SceneGame::Update(void) {
 		break;
 	case STATE_SHOP:
 		uiInst->Update();
+		sInst->Update(iInst);
 
 		MenuSlide();		//メニューのスライド処理
 
 		break;
 	case STATE_ITEM:
 		uiInst->Update();
+		iInst->Update();
 
 		MenuSlide();		//メニューのスライド処理
 
@@ -167,7 +177,7 @@ void SceneGame::Draw(void) {
 
 	SetDrawBright(255, 255, 255);
 
-	DrawGraph(growthX, 48, growthImage, true);				//成長ゲージ仮置き、ゲージを可変にする
+	DrawGraph(growthX, 48, growthImage, true);
 	DrawGraph(0, 0, gameImage, true);
 
 	Character::getInst()->Draw();
@@ -192,9 +202,11 @@ void SceneGame::Draw(void) {
 		uiInst->DrawMinigame();
 		break;
 	case STATE_SHOP:
+		sInst->Draw();
 
 		break;
 	case STATE_ITEM:
+		iInst->Draw();
 
 		break;
 
