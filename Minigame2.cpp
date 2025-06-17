@@ -327,10 +327,17 @@ void Minigame2::HandleKeypadInput(int keypadX, int keypadY) {
 				try {
 					tempBet = std::stoll(inputBetString);	//longlongで一旦受ける
 				}
-				catch (const std::out_of_range& oor) {
+				catch (const std::out_of_range& eo) {
 					tempBet = std::numeric_limits<long long>::max();
 				}
-				//例外処理についてかいとく
+				/*
+				try{ } catch{ }　→例外処理
+				tryで例外が発生した場合、プログラムがクラッシュするのではなく、対応するcatchに処理が移る
+				ここでは、long longで宣言した変数にinputBetStringをわたす
+				その際、引数が有効な数値形式でない、もしくは表現できる最大値を超える場合、std::stollは例外をスローする
+				std::out_of_rangeはstd::stollなどが数値変換を行う際に、変換しようとした値が目的の数値型の範囲外であるときにスローされる例外
+				ここではstd::numeric_limits<long long>::max()でlong long型が格のできる最大値を返している
+				*/
 
 				if (tempBet > Character::getInst()->GetMoney()) {
 					betMoney = Character::getInst()->GetMoney();

@@ -96,13 +96,18 @@ void SceneGame::Update(void) {
 		int wantTo = Character::getInst()->GetWnatTo();
 		int wantx = Character::getInst()->GetWantPosX();
 		int wanty = Character::getInst()->GetWantPosY();
+		int usedItemId = iInst->GetUsedItemId();
 		if (wantTo == Character::play) {
-
+			if (usedItemId == 1) {
+				Character::getInst()->CharaPlay();
+			}
 
 			nowWant = static_cast<CharaWant>(0);
 		}
 		else if (wantTo == Character::eat) {
-
+			if (usedItemId == 2) {
+				Character::getInst()->CharaEat();
+			}
 
 			nowWant = static_cast<CharaWant>(1);
 		}
@@ -148,14 +153,19 @@ void SceneGame::Update(void) {
 		MenuSlide();		//メニューのスライド処理
 
 		break;
-	case STATE_ITEM:
+	case STATE_ITEM: {
 		uiInst->Update();
 		iInst->Update();
+
+		if (iInst->ItemUsed()) {
+			iInst->SetItemUsedFlgF();
+			uiInst->SetCheckDownT();
+		}
 
 		MenuSlide();		//メニューのスライド処理
 
 		break;
-
+	}
 	case STATE_OPTION:
 		uiInst->Update();
 
@@ -169,7 +179,7 @@ void SceneGame::Update(void) {
 	now1Key = CheckHitKey(KEY_INPUT_1);
 	if (prev1Key == 1 && now1Key == 0) {
 		//nextScene_ID = E_SCENE_TITLE;
-		Character::getInst()->AddMoney(1000);
+		Character::getInst()->AddGrowth(50);
 	}
 }
 
@@ -215,16 +225,21 @@ void SceneGame::Draw(void) {
 		break;
 	}
 
+	int g = Character::getInst()->GetGrowth();
+	if (g >= 7) {
+		Character::getInst()->GrownMax();
+	}
+
 	//DrawBox(0, 0, 32, 32, 0xff0000, true);
-	DrawCircle(mouseX, mouseY, 5, GetColor(0, 0, 255));		//マウス座標の場所に円の描画
+	//DrawCircle(mouseX, mouseY, 5, GetColor(0, 0, 255));		//マウス座標の場所に円の描画
 	//DrawFormatString(0, 0, 0x000000, "%d", money);
 	//if(nowGameState== STATE_SELECTGAME)DrawString(0, 0, "1", true);
 	//else DrawString(0, 0, "0", true);
 
-	int r = Character::getInst()->GetRequest();
-	DrawFormatString(0, 0, 0x000000, "%d", r);
-	int g = Character::getInst()->GetGrowth();
-	DrawFormatString(0, 48, 0x000000, "成長度：%d", g);
+	/*int r = Character::getInst()->GetRequest();
+	DrawFormatString(0, 0, 0x000000, "%d", r);*/
+	/*int g = Character::getInst()->GetGrowth();
+	DrawFormatString(0, 48, 0x000000, "成長度：%d", g);*/
 }
 
 bool SceneGame::Release(void) {

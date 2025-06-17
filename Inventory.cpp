@@ -11,6 +11,9 @@ Inventory::Inventory() :selectedItem(0) {
 
 	useImage = LoadGraph("image/button-use.png");
 
+	lastUsedItem = -1;
+	itemUsedFlg = false;
+
 	mouseX = mouseY = 0;
 	prevMouseLeft = nowMouseLeft = 0;
 }
@@ -37,7 +40,8 @@ void Inventory::Update() {
 
 			if (prevMouseLeft == 1 && nowMouseLeft == 0 && mouseX >= buttonx && mouseX <= buttonx + buttonWid && mouseY >= buttony && mouseY <= buttony + buttonHig) {
 				//アイテムを使用(1つ削除)
-				RemoveItem(playerInventory[selectedItem].id, 1);
+				lastUsedItem = playerInventory[i].id;
+				RemoveItem(playerInventory[i].id, 1);
 
 				if (selectedItem >= playerInventory.size() && !playerInventory.empty()) {
 					selectedItem = playerInventory.size() - 1;		//最後のアイテムを消したら表示を調整
@@ -45,6 +49,8 @@ void Inventory::Update() {
 				else if (playerInventory.empty()) {
 					selectedItem = 0;	//すべてのアイテムがなくなったら選択をリセット
 				}
+
+				itemUsedFlg = true;
 				return;
 			}
 		}
@@ -97,4 +103,11 @@ void Inventory::RemoveItem(int itemId, int quantity) {
 			return;
 		}
 	}
+}
+
+int Inventory::GetUsedItemId(void) {
+
+	int id = lastUsedItem;
+	lastUsedItem = -1;
+	return id;
 }

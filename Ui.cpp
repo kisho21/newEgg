@@ -105,7 +105,7 @@ void Ui::Update(void) {
 
 void Ui::Draw(void) {
 
-	//DrawGraph(2, 3, upsideImage, true);
+	DrawGraph(2, 3, upsideImage, true);
 	DrawGraph(Application::WINDOW_SIZE_WID / 2 + 2, 3, upsideImage, true);
 	DrawGraph(Application::WINDOW_SIZE_WID / 2 + 8, 7, coinImage, true);
 

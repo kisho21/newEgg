@@ -25,6 +25,7 @@ public:
 
 	bool GetCheckDown(void) { return checkDown; }
 	void SetCheckDownF(void) { checkDown = false; }
+	void SetCheckDownT(void) { checkDown = true; }
 
 	//bool SetMiniGame(void) { checkMinigame = true; }
 

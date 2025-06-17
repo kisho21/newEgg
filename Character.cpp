@@ -12,7 +12,7 @@
 //シングルトンインスタンスの初期化
 Character* Character::inst = nullptr;
 
-Character::Character(void) :growthRate(-267), gameMoney(1000), requestCount(0)/*,requestFlg(false)*/ {
+Character::Character(void) :growthRate(-267), gameMoney(1000), requestCount(0), trophyImage(-1) {
 
 	playImage = eatImage = toiletImage = bathImage = touchImage = -1;
 	wantTo = normal;
@@ -55,6 +55,8 @@ bool Character::SystemInit(void) {
 	if (bathImage == -1) return false;
 	touchImage = LoadGraph("image/wantTouch.png");
 	if (touchImage == -1) return false;
+	trophyImage = LoadGraph("image/trophy.png");
+	if (trophyImage == -1) return false;
 
 	return true;
 }
@@ -145,7 +147,18 @@ void Character::SetGrowth(int growth) {
 //成長度を増加させる
 void Character::AddGrowth(int amount) {
 
-	if (amount > 0) growthRate += amount;
+	if (amount > 0) {
+		growthRate += amount;
+		if (growthRate >= 7) {
+			growthRate = 7;
+		}
+	}
+}
+
+//最大まで成長した
+void Character::GrownMax(void) {
+
+	DrawGraph(9, 6, trophyImage, true);
 }
 
 //所持金を設定

@@ -51,6 +51,7 @@ public:
 	int GetGrowth() const { return growthRate; }	//成長度を取得、const：値を変更しない
 	void SetGrowth(int growth);						//成長度を設定
 	void AddGrowth(int amount);						//成長度を増加させる
+	void GrownMax(void);							//最大まで成長した
 	//お金関係
 	int GetMoney() const { return gameMoney; }		//所持金を取得
 	void SetMoney(int money);						//所持金を設定
@@ -104,6 +105,8 @@ private:
 	int bubbleImage[MAX_ANIM];
 	int frame;									//アニメーションの表示フレーム
 	int frameAdjust;							//アニメーション表示の調整フレーム
+
+	int trophyImage;
 
 	bool idleFlg;
 	bool walkFlg;
