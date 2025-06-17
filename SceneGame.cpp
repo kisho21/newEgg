@@ -305,4 +305,8 @@ void SceneGame::SelectGame(void) {
 	if (mouseX > 9 && mouseX < 93 && mouseY > mGameY && mouseY < mGameY + 84 && prevMouseLeft == 1 && nowMouseLeft == 0) {
 		nextScene_ID = E_SCENE_MINIGAME_1;
 	}
+	//ƒ`ƒ“ƒ`ƒ‚ð‘I‘ð
+	if (mouseX > 102 && mouseX < 186 && mouseY > mGameY && mouseY < mGameY + 84 && prevMouseLeft == 1 && nowMouseLeft == 0) {
+		nextScene_ID = E_SCENE_MINIGAME_2;
+	}
 }

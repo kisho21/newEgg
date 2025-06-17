@@ -14,7 +14,7 @@ Ui::Ui(void) {
 	menuImage = -1;
 	minigameImage = shopImage = bagImage = setImage = -1;
 	pushedMinigameImage = pushedShopImage = pushedBagImage = pushedSetImage = -1;
-	mini1Image = -1;
+	mini1Image = mini2Image = -1;
 	downImage = pushedDownImage = -1;
 }
 
@@ -51,6 +51,8 @@ bool Ui::SystemInit(void) {
 
 	mini1Image = LoadGraph("image/icon-2048.png");
 	if (mini1Image == -1) return false;
+	mini2Image = LoadGraph("image/icon-tintiro.png");
+	if (mini2Image == -1) return false;
 
 	downImage = LoadGraph("image/button-down.png");
 	if (downImage == -1) return false;
@@ -130,6 +132,7 @@ void Ui::DrawMinigame(void) {
 
 	//ミニゲームアイコンの描画
 	DrawGraph(9, menuY + 120, mini1Image, true);
+	DrawGraph(102, menuY + 120, mini2Image, true);
 }
 
 bool Ui::Release(void) {

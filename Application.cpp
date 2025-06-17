@@ -2,7 +2,7 @@
 //ゲーム : egg
 //氏名   : 永吉
 //
-
+#include <time.h>
 #include <DxLib.h>
 
 #include "Application.h"
@@ -30,6 +30,8 @@ bool Application::SystemInit(void) {
 	SetWindowText("egg");							//ウィンドウのタイトル
 	SetGraphMode(WINDOW_SIZE_WID, WINDOW_SIZE_HIG, 32);		//ウィンドウのサイズと色モード
 	ChangeWindowMode(true);									//ウィンドウの表示方式 (ture = ウィンドウ表示 / false = フルスクリーン)
+
+	SRand(time(NULL));
 
 	if (DxLib_Init() == -1) return false;					//Dxライブラリの初期化
 

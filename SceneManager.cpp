@@ -9,20 +9,15 @@
 #include "SceneGame.h"
 #include "Fader.h"
 #include "Minigame1.h"
+#include "Minigame2.h"
 
 SceneManager::SceneManager(void) {
-
-	/*
-	gHuntInst = nullptr;
-	gOverInst = nullptr;
-	eventInst = nullptr;
-	gBaseInst = nullptr;
-	*/
 
 	titleInst = nullptr;
 	gameInst = nullptr;
 	fader = nullptr;
 	mini1Inst = nullptr;
+	mini2Inst = nullptr;
 
 	scene_ID = waitScene = E_SCENE_non;
 }
@@ -81,20 +76,10 @@ void SceneManager::Update(void) {
 			mini1Inst->Update();
 			nextScene_ID = mini1Inst->GetNextSceneID();
 			break;
-			/*
-		case E_SCENE_EVENT:
-			eventInst->Update();
-			nextScene_ID = eventInst->GetNextSceneID();
+		case E_SCENE_MINIGAME_2:
+			mini2Inst->Update();
+			nextScene_ID = mini2Inst->GetNextSceneID();
 			break;
-		case E_SCENE_TUTORIAL:
-			gGameInst->Update();
-			nextScene_ID = gGameInst->GetNextSceneID();
-			break;
-		case E_SCENE_GAMEOVER:
-			gHuntInst->Update();
-			nextScene_ID = gHuntInst->GetNextSceneID();
-			break;
-			*/
 		}
 
 		//ƒV[ƒ“‘JˆÚ”»’è
@@ -118,17 +103,9 @@ void SceneManager::Draw(void) {
 	case E_SCENE_MINIGAME_1:
 		mini1Inst->Draw();
 		break;
-		/*
-	case E_SCENE_EVENT:
-		eventInst->Draw();
+	case E_SCENE_MINIGAME_2:
+		mini2Inst->Draw();
 		break;
-	case E_SCENE_TUTORIAL:
-		gGameInst->Draw();
-		break;
-	case E_SCENE_GAMEOVER:
-		gHuntInst->Draw();
-		break;
-		*/
 	}
 
 	fader->Draw();
@@ -140,9 +117,7 @@ bool SceneManager::Release(void) {
 	ReleaseScene(E_SCENE_TITLE);
 	ReleaseScene(E_SCENE_GAME);
 	ReleaseScene(E_SCENE_MINIGAME_1);
-	//ReleaseScene(E_SCENE_EVENT);
-	//ReleaseScene(E_SCENE_TUTORIAL);
-	//ReleaseScene(E_SCENE_GAMEOVER);
+	ReleaseScene(E_SCENE_MINIGAME_2);
 
 	if (fader->Release() == false) return false;
 	delete fader;
@@ -183,32 +158,13 @@ bool SceneManager::ChangeScene(eScene_ID id) {
 			mini1Inst->GameInit();
 		}
 		break;
-		/*
-	case E_SCENE_EVENT:
-		if (eventInst == nullptr) {
-			eventInst = new SceneEvent();
-			if (eventInst == nullptr) return false;
-			eventInst->SystemInit();
-			eventInst->GameInit();
+	case E_SCENE_MINIGAME_2:
+		if (mini2Inst == nullptr) {
+			mini2Inst = new Minigame2();
+			if (mini2Inst == nullptr) return false;
+			mini2Inst->SystemInit();
 		}
 		break;
-	case E_SCENE_TUTORIAL:
-		if (gGameInst == nullptr) {
-			gGameInst = new SceneGame();
-			if (gGameInst == nullptr) return false;
-			gGameInst->SystemInit();
-			gGameInst->GameInit();
-		}
-		break;
-	case E_SCENE_GAMEOVER:
-		if (gHuntInst == nullptr) {
-			gHuntInst = new GameHuntScene();
-			if (gHuntInst == nullptr) return false;
-			gHuntInst->SystemInit();
-			gHuntInst->GameInit();
-		}
-		break;
-		*/
 	}
 
 	return true;
@@ -238,28 +194,12 @@ void SceneManager::ReleaseScene(eScene_ID id) {
 			mini1Inst = nullptr;
 		}
 		break;
-		/*
-	case E_SCENE_EVENT:
-		if (eventInst != nullptr) {
-			eventInst->Release();
-			delete eventInst;
-			eventInst = nullptr;
+	case E_SCENE_MINIGAME_2:
+		if (mini2Inst != nullptr) {
+			mini2Inst->Release();
+			delete mini2Inst;
+			mini2Inst = nullptr;
 		}
 		break;
-	case E_SCENE_TUTORIAL:
-		if (gGameInst != nullptr) {
-			gGameInst->Release();
-			delete gGameInst;
-			gGameInst = nullptr;
-		}
-		break;
-	case E_SCENE_GAMEOVER:
-		if (gHuntInst != nullptr) {
-			gHuntInst->Release();
-			delete gHuntInst;
-			gHuntInst = nullptr;
-		}
-		break;
-		*/
 	}
 }

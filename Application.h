@@ -19,5 +19,4 @@ public:
 
 private:
 	SceneManager* sceneM;	//SceneManagerクラスのインスタンスのポインタ
-
 };

@@ -2,16 +2,11 @@
 
 #include "StDefine.h"
 
-/*
-class GameHuntScene;
-class GameoverScene;
-*/
 class SceneTitle;
-//class SceneEvent;
 class SceneGame;
-//class SceneBase;
 class Fader;
 class Minigame1;
+class Minigame2;
 
 class SceneManager {
 public:
@@ -25,15 +20,13 @@ public:
 	bool Release(void);
 
 private:
-	/*
 	//インスタンスのポインタを作成
-	GameHuntScene* gHuntInst;
-	GameoverScene* gOverInst;
-	*/
 	SceneTitle* titleInst;
 	SceneGame* gameInst;
 	Fader* fader;
 	Minigame1* mini1Inst;
+	Minigame2* mini2Inst;
+
 
 	eScene_ID scene_ID;		//現在のシーンID
 	eScene_ID waitScene;	//シーンチェンジで次に遷移するシーンのIDを保管

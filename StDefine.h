@@ -7,6 +7,7 @@ enum eScene_ID {
 	E_SCENE_TITLE,			//タイトル画面
 	E_SCENE_GAME,			//ゲーム画面
 	E_SCENE_MINIGAME_1,		//ミニゲーム1画面、2048
+	E_SCENE_MINIGAME_2,		//ミニゲーム2画面、チンチロ
 
 	E_SCENE_ID_MAX,
 };
