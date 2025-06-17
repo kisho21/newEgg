@@ -413,7 +413,7 @@ void Minigame2::UpdateResult(void) {
 
 	messageText = "";
 	resultDisplayTimer++;
-	if (resultDisplayTimer < 600) return;	//4秒表示
+	if (resultDisplayTimer < 480) return;	//8秒表示
 
 	int plPayput = 0;
 
@@ -505,12 +505,12 @@ void Minigame2::DrawResult(void) {
 	//プレイヤーのサイコロと役
 	DrawString(44, 160, "あなたの出目:", GetColor(0, 0, 0));
 	DrawDice(playerDice, 44, 190);
-	DrawFormatString(44, 250, GetColor(0, 0, 0), "あなたの役: %d", playerRole);
+	DrawFormatString(44, 250, GetColor(0, 0, 0), "あなたの役: %s", GetRoleName(playerRole).c_str());
 
 	//CPUのサイコロと役
 	DrawString(44, 310, "CPUの出目:", GetColor(0, 0, 0));
 	DrawDice(cpuDice, 44, 340);
-	DrawFormatString(44, 400, GetColor(0, 0, 0), "CPUの役: %d", cpuRole);
+	DrawFormatString(44, 400, GetColor(0, 0, 0), "CPUの役: %s", GetRoleName(cpuRole).c_str());
 	
 	//勝敗メッセージ
 	DrawString(44, 432, messageText.c_str(), GetColor(0, 0, 0));
@@ -534,4 +534,27 @@ void Minigame2::DrawUI(void) {
 	DrawFormatString(100, 140, GetColor(0, 0, 0), "所持金：%d", Character::getInst()->GetMoney());
 	//デバッグ用
 	DrawFormatString(10, 30, GetColor(0, 0, 0), "状態: %d", nowState);
+}
+
+//役の名前を取得
+std::string Minigame2::GetRoleName(int role) const {
+
+	switch (role) {
+	case ROLE_NONE: return "役無し";
+	case ROLE_PINZORO: return "ピンゾロ";
+	case ROLE_2ZORO: return "二ゾロ";
+	case ROLE_3ZORO: return "三ゾロ";
+	case ROLE_4ZORO: return "四ゾロ";
+	case ROLE_5ZORO: return "五ゾロ";
+	case ROLE_6ZORO: return "六ゾロ";
+	case ROLE_456: return "シゴロ";
+	case ROLE_123: return "ヒフミ";
+	case ROLE_1EYE: return "一";
+	case ROLE_2EYE: return "二";
+	case ROLE_3EYE: return "三";
+	case ROLE_4EYE: return "四";
+	case ROLE_5EYE: return "五";
+	case ROLE_6EYE: return "六";
+	default: return "不明な役";
+	}
 }
