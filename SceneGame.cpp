@@ -215,12 +215,20 @@ void SceneGame::Draw(void) {
 	case STATE_SELECTGAME:
 		uiInst->DrawMinigame();
 		break;
-	case STATE_SHOP:
-		sInst->Draw();
+	case STATE_SHOP: {
+		int y = uiInst->GetMenuY();
+		if (y <= 50) {
+			sInst->Draw();
+		}
 		break;
-	case STATE_ITEM:
-		iInst->Draw();
+	}
+	case STATE_ITEM: {
+		int y = uiInst->GetMenuY();
+		if (y <= 50) {
+			iInst->Draw();
+		}
 		break;
+	}
 	case STATE_OPTION:
 		break;
 	}
