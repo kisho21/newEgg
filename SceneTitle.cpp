@@ -93,11 +93,16 @@ void SceneTitle::Update(void) {
 	if (prev3Key == 1 && now3Key == 0) {
 		nextScene_ID = E_SCENE_MINIGAME_1;
 	}
+	prev4Key = now4Key;
+	now4Key = CheckHitKey(KEY_INPUT_4);
+	if (prev4Key == 1 && now4Key == 0) {
+		nextScene_ID = E_SCENE_MINIGAME_2;
+	}
 	/*
-	1:ゲーム
-	2:ミニゲーム
-	3:
-	4:
+	1:名前決め
+	2:ゲーム
+	3:ミニゲーム1
+	4:ミニゲーム2
 	5:
 	*/
 }
@@ -110,8 +115,8 @@ void SceneTitle::Draw(void) {
 	if (onStart == false) DrawGraph(startX, startY, startImage, true);
 	if (onStart == true) DrawGraph(startX, startY, pushedStartImage, true);
 
-	//DrawString(100, Application::WINDOW_SIZE_HIG - 100, "スペースキーでスタート", 0x000000);
-	DrawCircle(mouseX, mouseY, 5, GetColor(0, 0, 255));		//マウス座標の場所に円の描画
+	//debug
+	/*DrawCircle(mouseX, mouseY, 5, GetColor(0, 0, 255));*/		//マウス座標の場所に円の描画
 }
 
 bool SceneTitle::Release(void) {

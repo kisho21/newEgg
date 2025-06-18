@@ -40,9 +40,6 @@ bool Application::SystemInit(void) {
 
 	sceneM->SystemInit();
 
-	//mouseX = 0;
-	//mouseY = 0;
-
 	return true;
 }
 

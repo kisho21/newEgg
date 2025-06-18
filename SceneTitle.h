@@ -44,4 +44,5 @@ private:
 	int prev1Key, now1Key;
 	int prev2Key, now2Key;
 	int prev3Key, now3Key;
+	int prev4Key, now4Key;
 };

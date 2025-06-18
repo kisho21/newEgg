@@ -43,7 +43,7 @@ SceneName::~SceneName() {
 
 bool SceneName::SystemInit(void) {
 
-	fontHandle = CreateFontToHandle("ＭＳ 明朝", 24, 5, DX_FONTTYPE_NORMAL);
+	fontHandle = CreateFontToHandle("ＭＳ 明朝", 16, 5, DX_FONTTYPE_NORMAL);
 	if (fontHandle == -1) return false;
 
 	//確定ボタンの画像
@@ -216,7 +216,7 @@ void SceneName::Update(void) {
 void SceneName::Draw(void) {
 
 	//ガイドメッセージ
-	DrawStringToHandle(Application::WINDOW_SIZE_WID / 2 - GetDrawStringWidthToHandle("なまえをにゅうりょくしてください", strlen("なまえをにゅうりょくしてください"), fontHandle) / 2, 50, "なまえをにゅうりょくしてください", 0x000000, fontHandle);
+	DrawStringToHandle(Application::WINDOW_SIZE_WID / 2 - GetDrawStringWidthToHandle("なまえをにゅうりょくしてください", strlen("なまえをにゅうりょくしてください"), fontHandle) / 2, 50, "なまえをにゅうりょくしてください", 0xffffff, fontHandle);
 
 	//入力中の名前を表示する枠
 	int inputFieldWidth = 240;
@@ -227,14 +227,14 @@ void SceneName::Draw(void) {
 	DrawBox(inputFieldX, inputFieldY, inputFieldX + inputFieldWidth, inputFieldY + inputFieldHeight, GetColor(0, 0, 0), FALSE);
 
 	//入力中の名前
-	DrawStringToHandle(inputFieldX + (inputFieldWidth - GetDrawStringWidthToHandle(enteredName.c_str(), GetStringLength(enteredName.c_str()), fontHandle)) / 2, inputFieldY + (inputFieldHeight - GetFontSizeToHandle(fontHandle)) / 2, enteredName.c_str(), 0x000000, fontHandle);
+	DrawStringToHandle(inputFieldX + (inputFieldWidth - GetDrawStringWidthToHandle(enteredName.c_str(), GetStringLength(enteredName.c_str()), fontHandle)) / 2 - 16, inputFieldY + (inputFieldHeight - GetFontSizeToHandle(fontHandle)) / 2, enteredName.c_str(), 0x000000, fontHandle);
 	
 	//仮想キーボードの描画
 	for (const auto& key : virtualKeyboardKeys) {
 		DrawBox(key.x, key.y, key.x + key.width, key.y + key.height, GetColor(150, 150, 150), TRUE);
 		DrawBox(key.x, key.y, key.x + key.width, key.y + key.height, GetColor(50, 50, 50), FALSE); // 枠線
 
-		DrawStringToHandle(key.x + (key.width - GetDrawStringWidthToHandle(key.displayString.c_str(), GetStringLength(key.displayString.c_str()), key.fontHandle)) / 2, key.y + (key.height - GetFontSizeToHandle(key.fontHandle)) / 2, key.displayString.c_str(), 0x000000, key.fontHandle);
+		DrawStringToHandle(key.x + (key.width - GetDrawStringWidthToHandle(key.displayString.c_str(), GetStringLength(key.displayString.c_str()), key.fontHandle)) / 2 - 10, key.y + (key.height - GetFontSizeToHandle(key.fontHandle)) / 2, key.displayString.c_str(), 0x000000, key.fontHandle);
 	}
 
 	//確認ボタンの描画

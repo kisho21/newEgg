@@ -238,25 +238,13 @@ void Character::RequestCount(void) {
 			else if (wantsNum == 4) wantTo = touch;
 			else if (wantsNum == 5) wantTo = play;
 
-			/*if (wantsNum >= 0 && wantsNum <= 4)*/ requestFlg = true;
-			/*else requestFlg = false;*/
+			requestFlg = true;
 			requestCount = 0;
 		}
 	}
 	else {
 		//リクエストフラグが立つと、ランダムで要求提示
 		Request();
-		//else wantTo = normal;
-
-		/*
-		requestAmount++;
-		this->AddRequest(requestAmount);
-		if (requestCount >= 500) {
-			requestFlg = false;
-			requestCount = 0;
-		}
-		//trueのときもカウントできる
-		*/
 	}
 
 }
@@ -273,28 +261,18 @@ void Character::Request(void) {
 		break;
 	case play:
 		playFlg = true;
-		//CharaPlay();
-
 		break;
 	case eat:
 		eatFlg = true;
-		//CharaEat();
-
 		break;
 	case toilet:
 		toiletFlg = true;
-		//CharaToilet();
-
 		break;
 	case bath:
 		bathFlg = true;
-		//CharaBath();
-
 		break;
 	case touch:
 		touchFlg = true;
-		//CharaTouth();
-
 		break;
 	}
 }
@@ -341,15 +319,13 @@ void Character::DrawRequest(void) {
 
 //遊びたいを解消
 void Character::CharaPlay(void) {
-	//要求提示時の挙動
+
 	//要求解消時の数値の変化、成長度の加算
 	this->AddGrowth(5);
 	requestFlg = false;
 	requestCount = 0;
 	wantTo = normal;
 	playFlg = false;
-	
-	//解消するためのプレイヤーの操作はSceneGameに書く
 }
 
 //おなかすいたを解消

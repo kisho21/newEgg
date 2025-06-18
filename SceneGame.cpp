@@ -151,7 +151,6 @@ void SceneGame::Update(void) {
 		sInst->Update(iInst);
 
 		MenuSlide();		//メニューのスライド処理
-
 		break;
 	case STATE_ITEM: {
 		uiInst->Update();
@@ -163,24 +162,22 @@ void SceneGame::Update(void) {
 		}
 
 		MenuSlide();		//メニューのスライド処理
-
 		break;
 	}
 	case STATE_OPTION:
 		uiInst->Update();
 
 		MenuSlide();		//メニューのスライド処理
-
 		break;
 	}
 
 	//デバッグ用
-	prev1Key = now1Key;
-	now1Key = CheckHitKey(KEY_INPUT_1);
-	if (prev1Key == 1 && now1Key == 0) {
-		//nextScene_ID = E_SCENE_TITLE;
-		Character::getInst()->AddGrowth(50);
-	}
+	//prev1Key = now1Key;
+	//now1Key = CheckHitKey(KEY_INPUT_1);
+	//if (prev1Key == 1 && now1Key == 0) {
+	//	//nextScene_ID = E_SCENE_TITLE;
+	//	Character::getInst()->AddGrowth(50);
+	//}
 }
 
 void SceneGame::Draw(void) {
@@ -220,15 +217,11 @@ void SceneGame::Draw(void) {
 		break;
 	case STATE_SHOP:
 		sInst->Draw();
-
 		break;
 	case STATE_ITEM:
 		iInst->Draw();
-
 		break;
-
 	case STATE_OPTION:
-
 		break;
 	}
 
@@ -237,6 +230,7 @@ void SceneGame::Draw(void) {
 		Character::getInst()->GrownMax();
 	}
 
+	//デバッグ
 	//DrawBox(0, 0, 32, 32, 0xff0000, true);
 	//DrawCircle(mouseX, mouseY, 5, GetColor(0, 0, 255));		//マウス座標の場所に円の描画
 	//DrawFormatString(0, 0, 0x000000, "%d", money);
@@ -289,7 +283,6 @@ void SceneGame::MenuSlide(void) {
 			uiInst->SetMenuY(y);
 			uiInst->SetIconY(y + 16);
 		}
-		//break;
 	}
 	if (down) {
 		int nexty = uiInst->GetMenuY() + 15;
@@ -304,7 +297,6 @@ void SceneGame::MenuSlide(void) {
 			uiInst->SetMenuY(y);
 			uiInst->SetIconY(y + 16);
 		}
-		//break;
 	}
 }
 

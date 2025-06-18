@@ -99,7 +99,6 @@ void Ui::Update(void) {
 	if (mouseX >= Application::WINDOW_SIZE_WID / 2 - 32 && mouseX <= Application::WINDOW_SIZE_WID / 2 + 32 && mouseY >= menuY + 400 && mouseY <= menuY + 432) onDown = true;
 	else onDown = false;
 
-	//checkDown = (onDown && prevMouseLeft == 0 && nowMouseLeft == 1) ? true : false;
 	if (onDown && prevMouseLeft == 0 && nowMouseLeft == 1) checkDown = true;
 }
 

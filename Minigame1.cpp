@@ -68,17 +68,16 @@ void Minigame1::Update(void) {
     UpdateGame();
 
     //デバッグ用
-    prev1Key = now1Key;
-    now1Key = CheckHitKey(KEY_INPUT_1);
-    if (prev1Key == 1 && now1Key == 0) {
-        nextScene_ID = E_SCENE_GAME;
+    prev3Key = now3Key;
+    now3Key = CheckHitKey(KEY_INPUT_3);
+    if (prev3Key == 1 && now3Key == 0) {
+        nextScene_ID = E_SCENE_TITLE;
     }
     prev0Key = now0Key;
     now0Key = CheckHitKey(KEY_INPUT_0);
     if (prev0Key == 1 && now0Key == 0) {
         Character::getInst()->AddMoney(5);
     }
-    //Character::getInst()->RequestCount();
 }
 
 void Minigame1::Draw(void) {
@@ -92,11 +91,11 @@ void Minigame1::Draw(void) {
     DrawGame();
 
     //デバッグ
-    //int m = Character::getInst()->GetMoney();
-    //DrawFormatString(0, 0, 0x000000, "%d", m);
+    /*int m = Character::getInst()->GetMoney();
+    DrawFormatString(0, 0, 0x000000, "%d", m);
     int r = Character::getInst()->GetRequest();
     DrawFormatString(0, 0, 0x000000, "%d", r);
-    DrawCircle(mouseX, mouseY, 5, GetColor(0, 0, 255));		//マウス座標の場所に円の描画
+    DrawCircle(mouseX, mouseY, 5, GetColor(0, 0, 255));*/		//マウス座標の場所に円の描画
 }
 
 bool Minigame1::Release(void) {
@@ -276,8 +275,6 @@ void Minigame1::DrawGame() {
     }
 
     //スコアの描画
-    //DrawString(GRID_START_X, GRID_START_Y + BOARD_SIZE * (TILE_SIZE + TILE_GAP) + TILE_GAP, "Score:", 0xffffff);
-    //DrawFormatString(GRID_START_X + 80, GRID_START_Y + BOARD_SIZE * (TILE_SIZE + TILE_GAP) + TILE_GAP, 0x000000, "%lld", score);
     DrawFormatString(30, 440, 0x000000, "score:%lld", score);
 
     SetDrawBright(255, 255, 255);
@@ -334,7 +331,6 @@ void Minigame1::DrawTile(int col, int row, int value) {
         int textHeight = GetFontSize();
 
         DrawStringToHandle(x1 + (TILE_SIZE - textWidth) / 2, y1 + (TILE_SIZE - textHeight) / 2, text, GetColor(0, 0, 0), fontHandle);
-        // SetFontSize(16);     //この行は不要になる
     }
 }
 
@@ -342,10 +338,7 @@ void Minigame1::DrawTile(int col, int row, int value) {
 void Minigame1::UpdateGame() {
 
     if (nowGameState != PLAYING) {
-        //ゲームオーバー、クリアの場合はRキーでリスタートできるようにする
-        /*if (CheckHitKey(KEY_INPUT_R)) {
-            InitializeGame();
-        }*/
+        //ゲームオーバー、クリア時の処理
         if (mouseX >= 15 && mouseX <= 135 && mouseY >= 370 && mouseY <= 410 && prevMouseLeft == 1 && nowMouseLeft == 0) {
             InitializeGame();
         }

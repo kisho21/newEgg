@@ -107,4 +107,7 @@ private:
 	void DrawSelectNext(void);						//ŽŸ‚Ì‘I‘ð‚Ì•`‰æ
 	void DrawUI(void);								//UI‚Ì•`‰æ
 	std::string GetRoleName(int role) const;		//–ð‚Ì–¼‘O‚ðŽæ“¾
+
+	//debug
+	int prev4Key, now4Key;
 };

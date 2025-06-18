@@ -13,9 +13,6 @@ public:
 	static constexpr int BUBBLE_SIZE = 144;
 	static constexpr int ANIM_NUM_BUBBLE = 2;
 
-	//アニメーションインターバル
-	//static constexpr int ANIM_INTERVAL = 10;
-
 	//シングルトンインスタンスを取得する静的メソッド
 	static Character* getInst();
 

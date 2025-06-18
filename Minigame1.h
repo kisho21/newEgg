@@ -71,7 +71,7 @@ private:
 	void GameOver();
 
 	//デバッグ
-	int prev1Key, now1Key;
+	int prev3Key, now3Key;
 	int prev0Key, now0Key;
 	//int prevUpKey, prevDownKey, prevRightKey, prevLeftKey, nowUpKey, nowDownKey, nowRightKey, nowLeftKey;
 };

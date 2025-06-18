@@ -22,9 +22,6 @@ public:
 
 	eScene_ID GetNextSceneID(void) { return nextScene_ID; }
 
-	//int GetMoney(void) { return money; }
-	//void SetMoney(int m) { money = m; }
-
 private:
 	//ゲームの状態を表す列挙型
 	enum GameState {
@@ -37,7 +34,6 @@ private:
 	GameState nowGameState = STATE_PLAY;	//現在のゲームの状態、初期プレイ中
 
 	//各クラスのインスタンスのポインタの追加
-	//Character* charaInst;
 	Shop* sInst;
 	Inventory* iInst;
 	Ui* uiInst;
@@ -49,9 +45,6 @@ private:
 	int growthX;							//成長ゲージのX座標
 
 	char moneyText[32];						//所持金を表示させるのに十分なバッファ
-
-	//int growthPoint;						//成長ポイント
-	//int growthX;							//成長ゲージの長さ、X座標を変えることで表す
 
 	CharaWant nowWant;	//現在の要望
 

@@ -27,8 +27,6 @@ public:
 	void SetCheckDownF(void) { checkDown = false; }
 	void SetCheckDownT(void) { checkDown = true; }
 
-	//bool SetMiniGame(void) { checkMinigame = true; }
-
 private:
 	int upsideImage;																//画面上部の枠
 	int coinImage;																	//お金アイコン画像
@@ -47,7 +45,6 @@ private:
 
 	bool onMinigame, onShop, onBag, onSet, onDown;
 	bool checkDown;
-	//bool checkMinigame, checkShop, checkBag, checkSet, checkDown;
 
 	int mouseX, mouseY;						//マウス座標
 	int prevMouseLeft, nowMouseLeft;		//マウスの入力状態を格納する変数

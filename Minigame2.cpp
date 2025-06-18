@@ -101,6 +101,13 @@ void Minigame2::Update(void) {
 		nextScene_ID = E_SCENE_GAME;
 		break;
 	}
+
+	//debug
+	prev4Key = now4Key;
+	now4Key = CheckHitKey(KEY_INPUT_4);
+	if (prev4Key == 1 && now4Key == 0) {
+		nextScene_ID = E_SCENE_TITLE;
+	}
 }
 
 void Minigame2::Draw(void) {

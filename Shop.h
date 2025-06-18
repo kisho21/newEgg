@@ -25,7 +25,6 @@ private:
 	int selectedItem;					//選択中のアイテム
 	int playerMoney;					//所持金Charaクラスから取得する
 
-	/*void BuyItem(Inventory* inventory, int itemId);*/
 	int buyImage;	//購入ボタン
 
 	int mouseX, mouseY;						//マウス座標
