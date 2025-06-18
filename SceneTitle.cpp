@@ -10,8 +10,6 @@
 SceneTitle::SceneTitle(void) {
 
 	titleImage = -1;
-	
-	//titleBgm = -1;
 }
 
 SceneTitle::~SceneTitle(void) {
@@ -40,13 +38,6 @@ void SceneTitle::GameInit(void) {
 }
 
 void SceneTitle::Update(void) {
-
-	/*
-	//bgmのループ処理
-	if (CheckSoundMem(titleBgm) == 0) {
-		PlaySoundMem(titleBgm, DX_PLAYTYPE_LOOP);
-	}
-	*/
 
 	//キーの状態
 	prevMouseLeft = nowMouseLeft;
@@ -105,8 +96,6 @@ void SceneTitle::Draw(void) {
 bool SceneTitle::Release(void) {
 
 	if (DeleteGraph(titleImage) == -1) return false;
-
-	//if (DeleteSoundMem(titleBgm) == -1) return false;
 
 	return true;
 }

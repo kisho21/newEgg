@@ -12,6 +12,8 @@
 Application::Application(void) {
 
 	sceneM = nullptr;
+
+	bgm = -1;
 }
 
 //デストラクタ
@@ -34,6 +36,9 @@ bool Application::SystemInit(void) {
 	SRand(time(NULL));
 
 	if (DxLib_Init() == -1) return false;					//Dxライブラリの初期化
+
+	bgm = LoadSoundMem("music/bgm.mp3");
+	if (bgm == -1) return false;
 
 	sceneM = new SceneManager();
 	if (sceneM == nullptr) return false;
@@ -65,6 +70,12 @@ output：無し
 void Application::Update(void) {
 
 	sceneM->Update();
+
+	
+	//bgmのループ処理
+	if (CheckSoundMem(bgm) == 0) {
+		PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
+	}
 }
 
 /*
@@ -88,6 +99,8 @@ input：無し
 output：true = 正常終了 / false = エラー
 */
 bool Application::Release(void) {
+
+	if (DeleteSoundMem(bgm) == -1) return false;
 
 	sceneM->Release();
 	delete sceneM;

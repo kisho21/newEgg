@@ -23,8 +23,6 @@ public:
 private:
 	int titleImage;						//背景画像のハンドル番号
 
-	//int titleBgm;						//bgmを格納する変数
-
 	int mouseX, mouseY;					//マウス座標
 	int prevMouseLeft, nowMouseLeft;	//マウスの入力状態を格納する変数
 	int prevSpaceKey, nowSpaceKey;		//キーの状態を格納する変数

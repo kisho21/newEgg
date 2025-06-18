@@ -23,4 +23,6 @@ public:
 
 private:
 	SceneManager* sceneM;	//SceneManagerクラスのインスタンスのポインタ
+
+	int bgm;			//bgmを格納する変数
 };
