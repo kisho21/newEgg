@@ -27,7 +27,7 @@ Minigame1::~Minigame1(void) {
 
 bool Minigame1::SystemInit(void) {
 
-    gameImage = LoadGraph("image/minigameFrame.png");
+    gameImage = LoadGraph("image/minigame-2048.png");
     if (gameImage == -1) return false;
     arrowImage = LoadGraph("image/arrow.png");
     if (arrowImage == -1) return false;

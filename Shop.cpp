@@ -14,9 +14,11 @@ Shop::Shop() : selectedItem(0) {
 	playerMoney = Character::getInst()->GetMoney();
 
 	//アイテムを追加
-	shopItems.push_back({ 1,"ボール",100 ,LoadGraph("image/item/ball.png") });
-	shopItems.push_back({ 2,"ご飯",100 ,LoadGraph("image/item/omu.png") });
-	shopItems.push_back({ 3,"くすり",5000,LoadGraph("image/item/medicine.png") });
+	shopItems.push_back({ 1,"ボール",150 ,LoadGraph("image/item/ball.png") });
+	shopItems.push_back({ 2,"オムライス",200 ,LoadGraph("image/item/omu.png") });
+	shopItems.push_back({ 3,"ペーパー",100 ,LoadGraph("image/item/paper.png") });
+	shopItems.push_back({ 4,"おふろセット",300 ,LoadGraph("image/item/soap.png") });
+	shopItems.push_back({ 5,"くすり",5000,LoadGraph("image/item/medicine.png") });
 
 	//画像の読み込み
 	buyImage = LoadGraph("image/button-buy.png");

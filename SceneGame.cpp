@@ -112,18 +112,26 @@ void SceneGame::Update(void) {
 			nowWant = static_cast<CharaWant>(1);
 		}
 		else if (wantTo == Character::toilet) {
-			if (mouseX > wantx + 30 && mouseX < wantx + 64 && mouseY > wanty && mouseY < wanty + 64 && prevMouseLeft == 1 && nowMouseLeft == 0) {
+			if (usedItemId == 3) {
 				Character::getInst()->SetIdleF();
 				Character::getInst()->SetWalkT();
 			}
+			/*if (mouseX > wantx + 30 && mouseX < wantx + 64 && mouseY > wanty && mouseY < wanty + 64 && prevMouseLeft == 1 && nowMouseLeft == 0) {
+				Character::getInst()->SetIdleF();
+				Character::getInst()->SetWalkT();
+			}*/
 
 			nowWant = static_cast<CharaWant>(2);
 		}
 		else if (wantTo == Character::bath) {
-			if (mouseX > wantx + 30 && mouseX < wantx + 64 && mouseY > wanty && mouseY < wanty + 64 && prevMouseLeft == 1 && nowMouseLeft == 0) {
+			if (usedItemId == 4) {
 				Character::getInst()->SetIdleF();
 				Character::getInst()->SetWalkT();
 			}
+			/*if (mouseX > wantx + 30 && mouseX < wantx + 64 && mouseY > wanty && mouseY < wanty + 64 && prevMouseLeft == 1 && nowMouseLeft == 0) {
+				Character::getInst()->SetIdleF();
+				Character::getInst()->SetWalkT();
+			}*/
 
 			nowWant = static_cast<CharaWant>(3);
 		}
@@ -172,12 +180,12 @@ void SceneGame::Update(void) {
 	}
 
 	//デバッグ用
-	//prev1Key = now1Key;
-	//now1Key = CheckHitKey(KEY_INPUT_1);
-	//if (prev1Key == 1 && now1Key == 0) {
-	//	//nextScene_ID = E_SCENE_TITLE;
-	//	Character::getInst()->AddGrowth(50);
-	//}
+	prev1Key = now1Key;
+	now1Key = CheckHitKey(KEY_INPUT_1);
+	if (prev1Key == 1 && now1Key == 0) {
+		//nextScene_ID = E_SCENE_TITLE;
+		Character::getInst()->AddGrowth(50);
+	}
 }
 
 void SceneGame::Draw(void) {

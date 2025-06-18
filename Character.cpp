@@ -287,32 +287,32 @@ void Character::DrawRequest(void) {
 	case play:
 		DrawGraph(wantPosX, wantPosY, playImage, true);
 
-		DrawString(0, 16, "play", 0x000000);
-		if (playFlg) DrawString(0, 32, "true", 0x000000);
+		/*DrawString(0, 16, "play", 0x000000);
+		if (playFlg) DrawString(0, 32, "true", 0x000000);*/
 		break;
 	case eat:
 		DrawGraph(wantPosX, wantPosY, eatImage, true);
 
-		DrawString(0, 16, "eat", 0x000000);
-		if (eatFlg) DrawString(0, 32, "true", 0x000000);
+		/*DrawString(0, 16, "eat", 0x000000);
+		if (eatFlg) DrawString(0, 32, "true", 0x000000);*/
 		break;
 	case toilet:
 		DrawGraph(wantPosX, wantPosY, toiletImage, true);
 
-		DrawString(0, 16, "toilet", 0x000000);
-		if (toiletFlg) DrawString(0, 32, "true", 0x000000);
+		/*DrawString(0, 16, "toilet", 0x000000);
+		if (toiletFlg) DrawString(0, 32, "true", 0x000000);*/
 		break;
 	case bath:
 		DrawGraph(wantPosX, wantPosY, bathImage, true);
 
-		DrawString(0, 16, "bath", 0x000000);
-		if (bathFlg) DrawString(0, 32, "true", 0x000000);
+		/*DrawString(0, 16, "bath", 0x000000);
+		if (bathFlg) DrawString(0, 32, "true", 0x000000);*/
 		break;
 	case touch:
 		DrawGraph(wantPosX, wantPosY, touchImage, true);
 
-		DrawString(0, 16, "touch", 0x000000);
-		if (touchFlg) DrawString(0, 32, "true", 0x000000);
+		/*DrawString(0, 16, "touch", 0x000000);
+		if (touchFlg) DrawString(0, 32, "true", 0x000000);*/
 		break;
 	}
 }

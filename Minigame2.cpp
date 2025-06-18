@@ -31,7 +31,7 @@ bool Minigame2::SystemInit(void) {
 	int dImg = LoadDivGraph("image/dice.png", 6, 6, 1, DICE_SIZE, DICE_SIZE, diceImage);
 	if (dImg == -1) return false;
 
-	gameImage = LoadGraph("image/minigameFrame.png");
+	gameImage = LoadGraph("image/minigame-tintiro.png");
 	rollImage = LoadGraph("image/button-roll.png");
 	continueImage = LoadGraph("image/button-continue.png");
 	quitImage = LoadGraph("image/button-quit.png");
@@ -547,7 +547,7 @@ void Minigame2::DrawUI(void) {
 	//所持金の表示
 	DrawFormatString(100, 140, GetColor(0, 0, 0), "所持金：%d", Character::getInst()->GetMoney());
 	//デバッグ用
-	DrawFormatString(10, 30, GetColor(0, 0, 0), "状態: %d", nowState);
+	/*DrawFormatString(10, 30, GetColor(0, 0, 0), "状態: %d", nowState);*/
 }
 
 //役の名前を取得

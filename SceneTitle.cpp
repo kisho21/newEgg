@@ -10,9 +10,7 @@
 SceneTitle::SceneTitle(void) {
 
 	titleImage = -1;
-	startImage = -1;
-	pushedStartImage = -1;
-
+	
 	//titleBgm = -1;
 }
 
@@ -22,15 +20,8 @@ SceneTitle::~SceneTitle(void) {
 
 bool SceneTitle::SystemInit(void) {
 
-	titleImage = LoadGraph("image/title2.png");
+	titleImage = LoadGraph("image/title.png");
 	if (titleImage == -1) return false;
-	startImage = LoadGraph("image/button-start2.png");
-	if (startImage == -1) return false;
-	pushedStartImage = LoadGraph("image/pushed-start2.png");
-	if (pushedStartImage == -1) return false;
-
-	//titleBgm = LoadSoundMem("bgm/title.mp3");
-
 	
 	mouseX = mouseY = 0;
 
@@ -43,11 +34,6 @@ void SceneTitle::GameInit(void) {
 
 	//次のシーンの初期設定
 	nextScene_ID = E_SCENE_TITLE;
-
-	startX = Application::WINDOW_SIZE_WID / 2 - START_BUTTON_WID / 2;
-	startY = 300;
-	onStart = false;
-	checkStart = false;
 
 	prevMouseLeft = nowMouseLeft = 0;
 	prevSpaceKey = nowSpaceKey = 0;
@@ -70,10 +56,8 @@ void SceneTitle::Update(void) {
 
 
 	GetMousePoint(&mouseX, &mouseY);		//マウスの座標を取得
-	CheckStartButton();						//スタートボタンの処理
 
-	if (checkStart == true) {
-		//StopSoundMem(titleBgm);
+	if (prevMouseLeft == 1 && nowMouseLeft == 0) {
 		nextScene_ID = E_SCENE_NAME;
 	}
 
@@ -109,12 +93,11 @@ void SceneTitle::Update(void) {
 
 void SceneTitle::Draw(void) {
 
-
-	//仮置き
+	//タイトル画像の描画
 	DrawGraph(0, 0, titleImage, true);
-	if (onStart == false) DrawGraph(startX, startY, startImage, true);
-	if (onStart == true) DrawGraph(startX, startY, pushedStartImage, true);
-
+	DrawString(73, 481, "- Click to Start -", 0x808080);
+	DrawString(72, 480, "- Click to Start -", 0xffffff);
+	
 	//debug
 	/*DrawCircle(mouseX, mouseY, 5, GetColor(0, 0, 255));*/		//マウス座標の場所に円の描画
 }
@@ -122,25 +105,8 @@ void SceneTitle::Draw(void) {
 bool SceneTitle::Release(void) {
 
 	if (DeleteGraph(titleImage) == -1) return false;
-	if (DeleteGraph(startImage) == -1) return false;
-	if (DeleteGraph(pushedStartImage) == -1) return false;
 
 	//if (DeleteSoundMem(titleBgm) == -1) return false;
 
 	return true;
-}
-
-//スタートボタンの処理
-void SceneTitle::CheckStartButton(void) {
-
-	if (mouseX >= startX && mouseX <= startX + START_BUTTON_WID && mouseY >= startY && mouseY <= startY + START_BUTTON_HIG) {
-		onStart = true;
-
-		if (prevMouseLeft == 1 && nowMouseLeft == 0) {
-			checkStart = true;
-		}
-	}
-	else {
-			onStart = false;
-	}
 }
